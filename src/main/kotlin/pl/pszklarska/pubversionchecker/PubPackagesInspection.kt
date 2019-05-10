@@ -16,10 +16,10 @@ import java.util.regex.Pattern
 const val REGEX_DEPENDENCY = ".+(?!version|sdk)\\b\\S+:.+\\..+\\..+"
 const val YML_EXTENSIONS = "yml"
 
-class PackagesInspection : LocalInspectionTool() {
+class PubPackagesInspection : LocalInspectionTool() {
 
     override fun getDisplayName(): String {
-        return "Checks for Pub Packages latest versions"
+        return "Pub Packages latest versions"
     }
 
     override fun getGroupDisplayName(): String {

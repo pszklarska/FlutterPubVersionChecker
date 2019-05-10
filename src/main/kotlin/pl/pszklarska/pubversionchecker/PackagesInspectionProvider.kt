@@ -4,6 +4,6 @@ import com.intellij.codeInspection.InspectionToolProvider
 
 class PackagesInspectionProvider : InspectionToolProvider {
     override fun getInspectionClasses(): Array<Class<*>> {
-        return arrayOf(PackagesInspection::class.java)
+        return arrayOf(PubPackagesInspection::class.java)
     }
 }
