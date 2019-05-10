@@ -4,6 +4,7 @@
     <vendor email="pszklarska@gmail.com" url="http://www.github.com/pszklarska/FlutterPubVersionChecker">Paulina
         Szklarska
     </vendor>
+    <idea-version since-build="183.5153" until-build="192.SNAPSHOT"/>
 
     <description><![CDATA[
     Plugin for checking the latest Pub packages versions.<br>
