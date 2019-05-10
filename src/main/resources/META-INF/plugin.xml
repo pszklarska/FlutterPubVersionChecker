@@ -1,0 +1,39 @@
+<idea-plugin>
+    <id>pl.pszklarska.pubversionchecker</id>
+    <name>Flutter Pub Version Checker</name>
+    <vendor email="pszklarska@gmail.com" url="http://www.github.com/pszklarska/FlutterPubVersionChecker">Paulina
+        Szklarska
+    </vendor>
+
+    <description><![CDATA[
+    Plugin for checking the latest Pub packages versions.<br>
+    It will automatically run inspection in your pubspec.yaml file to check all dependencies and compare versions
+    with the latest versions from <a hre="https://pub.dev">Pub package repository</a>.
+    ]]>
+    </description>
+
+    <change-notes><![CDATA[
+    <h2>1.0.0</h2>
+    <ul>
+    <li>First version of plugin</li>
+    <li>Support for checking packages version in format x.x.x</li></ul>
+    ]]>
+    </change-notes>
+
+    <depends>org.jetbrains.kotlin</depends>
+
+    <!-- Code Inspection Component  -->
+    <extensions defaultExtensionNs="com.intellij">
+        <inspectionToolProvider implementation="pl.pszklarska.pubversionchecker.PackagesInspectionProvider"/>
+    </extensions>
+
+    <depends>com.intellij.modules.lang</depends>
+    <!-- Notification Component  -->
+    <project-components>
+        <component>
+            <implementation-class>
+                pl.pszklarska.pubversionchecker.NotificationLoadedComponent
+            </implementation-class>
+        </component>
+    </project-components>
+</idea-plugin>
