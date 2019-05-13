@@ -13,8 +13,9 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.util.regex.Pattern
 
-const val REGEX_DEPENDENCY = ".+(?!version|sdk)\\b\\S+:.+\\..+\\..+"
+const val REGEX_DEPENDENCY = ".*(?!version|sdk)\\b\\S+:.+\\.[0-9]+\\.[0-9]+"
 const val YML_EXTENSIONS = "yml"
+const val PUB_API_URL = "https://pub.dartlang.org/api/packages/"
 
 class PubPackagesInspection : LocalInspectionTool() {
 
@@ -79,7 +80,8 @@ fun PsiFile.readPackageLines(): List<Pair<String, Int>> {
     text.forEach {
         counter++
         if (it == '\n') {
-            if (line.isPackageName()) {
+            line = line.trim()
+            if (!line.startsWith("#") && line.isPackageName()) {
                 linesList.add(line to counter - 2)
             }
             line = ""
@@ -101,7 +103,7 @@ fun getCurrentVersion(dependency: String): String {
 
 fun getLatestVersion(line: String): String {
     val packageName = line.trim().split(':')[0]
-    val url = URL("https://pub.dartlang.org/api/packages/$packageName")
+    val url = URL(PUB_API_URL + packageName)
 
     with(url.openConnection() as HttpURLConnection) {
         requestMethod = "GET"
