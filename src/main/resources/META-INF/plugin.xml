@@ -1,19 +1,22 @@
 <idea-plugin>
     <id>pl.pszklarska.pubversionchecker</id>
     <name>Flutter Pub Version Checker</name>
-    <vendor email="pszklarska@gmail.com" url="http://www.github.com/pszklarska/FlutterPubVersionChecker">Paulina
-        Szklarska
+    <vendor email="pszklarska@gmail.com"
+            url="http://www.github.com/pszklarska/FlutterPubVersionChecker">Paulina Szklarska
     </vendor>
     <idea-version since-build="183.5153" until-build="192.SNAPSHOT"/>
 
     <description><![CDATA[
     Plugin for checking the latest Pub packages versions.<br>
     It will automatically run inspection in your pubspec.yaml file to check all dependencies and compare versions
-    with the latest versions from <a hre="https://pub.dev">Pub package repository</a>.
+    with the latest versions from <a href="https://pub.dev">Pub package repository</a>.
     ]]>
     </description>
 
     <change-notes><![CDATA[
+    <h2>1.0.1</h2>
+    <ul>
+    <li>Fixing bug caused by commented dependencies</li>
     <h2>1.0.0</h2>
     <ul>
     <li>First version of plugin</li>
