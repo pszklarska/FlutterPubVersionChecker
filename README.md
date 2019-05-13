@@ -5,7 +5,7 @@
 It's a plugin for IntelliJ and Android Studio. This plugin makes inspection in pubspec.yaml 
 file for Flutter dependencies. It compares the version with the latest versions from [Dart packages repository](https://pub.dev)
 
-![Flutter Pub Version Checker in action](/img/screen1.png)
+<img src="/img/screen1.png" alt="Flutter Pub Version Checker in action" width="640"/>
 
 ## Contributions
 
