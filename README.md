@@ -7,6 +7,14 @@ file for Flutter dependencies. It compares the version with the latest versions 
 
 <img src="/img/screen1.png" alt="Flutter Pub Version Checker in action" width="640"/>
 
+## What's new?
+
+### 1.0.1
+- Fixing bug caused by commented dependencies</li>
+### 1.0.0
+- First version of plugin</li>
+- Support for checking packages version in format x.x.x</li></ul>
+
 ## Contributions
 
 Feel free to send Pull Request or file an Issue!
