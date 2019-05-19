@@ -7,8 +7,16 @@ file for Flutter dependencies. It compares the version with the latest versions 
 
 <img src="/img/screen1.png" alt="Flutter Pub Version Checker in action" width="640"/>
 
-## What's new?
+## How to install?
 
+You can install plugin directly from IntelliJ IDEA or Android Studio:
+1. Open _Preferences_
+2. Choose _Plugins_
+3. Select to look for plugins from _Marketplace_
+4. Search for **Flutter Pub Version Checker**
+5. Tap on Install
+
+## What's new?
 ### 1.0.1
 - Fixing bug caused by commented dependencies</li>
 ### 1.0.0
