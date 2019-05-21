@@ -3,9 +3,12 @@
 [![Pub](https://img.shields.io/jetbrains/plugin/v/12400-flutter-pub-version-checker.svg?label=flutter%20pub%20version%20checker)](https://plugins.jetbrains.com/plugin/12400-flutter-pub-version-checker)
 
 It's a plugin for IntelliJ and Android Studio. This plugin makes inspection in pubspec.yaml 
-file for Flutter dependencies. It compares the version with the latest versions from [Dart packages repository](https://pub.dev)
+file for Flutter dependencies. It compares the version with the latest versions from [Dart packages repository](https://pub.dev).
+You can also use quick fix action to update dependency.
 
 <img src="/img/screen1.png" alt="Flutter Pub Version Checker in action" width="640"/>
+
+<img src="/img/quickfix.gif" alt="Flutter Pub Version Checker quick fix"/>
 
 ## How to install?
 
@@ -17,6 +20,9 @@ You can install plugin directly from IntelliJ IDEA or Android Studio:
 5. Tap on Install
 
 ## What's new?
+### 1.1.0
+- Fixing performance issues
+- Adding quick fix option to update dependencies
 ### 1.0.1
 - Fixing bug caused by commented dependencies</li>
 ### 1.0.0

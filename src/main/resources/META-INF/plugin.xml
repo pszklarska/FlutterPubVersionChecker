@@ -14,6 +14,10 @@
     </description>
 
     <change-notes><![CDATA[
+    <h2>1.1.0</h2>
+    <ul>
+    <li>Fixing performance issues</li>
+    <li>Adding quick fix option to update dependencies</li>
     <h2>1.0.1</h2>
     <ul>
     <li>Fixing bug caused by commented dependencies</li>
