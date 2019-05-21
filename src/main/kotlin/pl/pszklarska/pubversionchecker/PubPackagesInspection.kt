@@ -56,9 +56,12 @@ private fun ProblemsHolder.showProblem(
     currentVersion: String,
     latestVersion: String
 ) {
+
+    val psiElement = file.findElementAt(counter)!!
     println("Found problem at $counter")
     registerProblem(
-        file.findElementAt(counter)!!,
-        "Version $currentVersion is different than the latest $latestVersion"
+        psiElement,
+        "Version $currentVersion is different than the latest $latestVersion",
+        DependencyQuickFix(psiElement, latestVersion)
     )
 }
