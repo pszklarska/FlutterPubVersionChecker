@@ -11,24 +11,38 @@ class FileParser(
     private val dependencyChecker: DependencyChecker
 ) {
 
-    fun checkFile(): List<ProblemDescription> {
+    fun checkFile(): List<VersionDescription> {
         return if (file.isPubspecFile()) {
-            file.readPackageLines()
-                .map { mapToProblemDescription(it) }
-                .filter { it.latestVersion.compareTo(it.currentVersion) != 0 }
+            return getVersionsFromFile()
         } else {
             emptyList()
         }
     }
 
-    private fun mapToProblemDescription(it: Pair<String, Int>): ProblemDescription {
+    private fun getVersionsFromFile(): MutableList<VersionDescription> {
+        val problemDescriptionList = mutableListOf<VersionDescription>()
+        file.readPackageLines().forEach {
+            try {
+                val versionDescription = mapToVersionDescription(it)
+                if (versionDescription.latestVersion != versionDescription.currentVersion) {
+                    problemDescriptionList.add(versionDescription)
+                }
+            } catch (e: UnableToGetLatestVersionException) {
+                //no-op
+            }
+        }
+        return problemDescriptionList
+    }
+
+    @Throws(UnableToGetLatestVersionException::class)
+    private fun mapToVersionDescription(it: Pair<String, Int>): VersionDescription {
         val dependency = it.first
         val counter = it.second
 
         val latestVersion = dependencyChecker.getLatestVersion(dependency)
         val currentVersion = getCurrentVersion(dependency)
 
-        return ProblemDescription(counter, currentVersion, latestVersion)
+        return VersionDescription(counter, currentVersion, latestVersion)
     }
 }
 
@@ -70,7 +84,7 @@ private fun getCurrentVersion(dependency: String): String {
 }
 
 
-data class ProblemDescription(
+data class VersionDescription(
     val counter: Int,
     val currentVersion: String,
     val latestVersion: String

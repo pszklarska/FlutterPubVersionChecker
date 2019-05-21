@@ -47,9 +47,7 @@ class YamlElementVisitor(
         problemDescriptions.forEach {
             holder.showProblem(file, it.counter, it.currentVersion, it.latestVersion)
         }
-
     }
-
 }
 
 private fun ProblemsHolder.showProblem(
@@ -59,7 +57,6 @@ private fun ProblemsHolder.showProblem(
     latestVersion: String
 ) {
     println("Found problem at $counter")
-    println("Problem - Current thread: ${Thread.currentThread().name}")
     registerProblem(
         file.findElementAt(counter)!!,
         "Version $currentVersion is different than the latest $latestVersion"
