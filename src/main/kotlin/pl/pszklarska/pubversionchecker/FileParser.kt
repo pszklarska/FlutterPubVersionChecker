@@ -3,7 +3,7 @@ package pl.pszklarska.pubversionchecker
 import com.intellij.psi.PsiFile
 import java.util.regex.Pattern
 
-const val REGEX_DEPENDENCY = ".*(?!version|sdk)\\b\\S+:.+\\.[0-9]+\\.[0-9]+"
+const val REGEX_DEPENDENCY = ".*(?!version|sdk)\\b\\S+:.+\\.[0-9]+\\.[0-9]+(.*)"
 const val YML_EXTENSIONS = "yml"
 
 class FileParser(
@@ -71,7 +71,7 @@ private fun PsiFile.readPackageLines(): List<Pair<String, Int>> {
 }
 
 
-private fun String.isPackageName(): Boolean {
+fun String.isPackageName(): Boolean {
     val regexPattern = Pattern.compile(REGEX_DEPENDENCY)
     return regexPattern.matcher(this).matches()
 }
