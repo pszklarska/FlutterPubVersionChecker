@@ -36,12 +36,4 @@
     </extensions>
 
     <depends>com.intellij.modules.lang</depends>
-    <!-- Notification Component  -->
-    <project-components>
-        <component>
-            <implementation-class>
-                pl.pszklarska.pubversionchecker.NotificationLoadedComponent
-            </implementation-class>
-        </component>
-    </project-components>
 </idea-plugin>
