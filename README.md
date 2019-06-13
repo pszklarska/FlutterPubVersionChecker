@@ -20,14 +20,17 @@ You can install plugin directly from IntelliJ IDEA or Android Studio:
 5. Tap on Install
 
 ## What's new?
+### 1.1.1
+- Added support for dependencies with version code
+- Removed notification on startup
 ### 1.1.0
-- Fixing performance issues
-- Adding quick fix option to update dependencies
+- Fixed performance issues
+- Added quick fix option to update dependencies
 ### 1.0.1
-- Fixing bug caused by commented dependencies</li>
+- Fixed bug caused by commented dependencies</li>
 ### 1.0.0
 - First version of plugin</li>
-- Support for checking packages version in format x.x.x</li></ul>
+- Added support for checking packages version in format x.x.x</li></ul>
 
 ## Contributions
 

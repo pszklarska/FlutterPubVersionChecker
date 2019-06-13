@@ -6,6 +6,8 @@
     </vendor>
     <idea-version since-build="183.5153" until-build="192.SNAPSHOT"/>
 
+    <depends>org.jetbrains.kotlin</depends>
+
     <description><![CDATA[
     Plugin for checking the latest Pub packages versions.<br>
     It will automatically run inspection in your pubspec.yaml file to check all dependencies and compare versions
@@ -14,21 +16,23 @@
     </description>
 
     <change-notes><![CDATA[
+    <h2>1.1.1</h2>
+    <ul>
+    <li>Added support for dependencies with version code</li>
+    <li>Removed notification on startup</li>
     <h2>1.1.0</h2>
     <ul>
-    <li>Fixing performance issues</li>
-    <li>Adding quick fix option to update dependencies</li>
+    <li>Fixed performance issues</li>
+    <li>Added quick fix option to update dependencies</li>
     <h2>1.0.1</h2>
     <ul>
-    <li>Fixing bug caused by commented dependencies</li>
+    <li>Fixed bug caused by commented dependencies</li>
     <h2>1.0.0</h2>
     <ul>
     <li>First version of plugin</li>
-    <li>Support for checking packages version in format x.x.x</li></ul>
+    <li>Added support for checking packages version in format x.x.x</li></ul>
     ]]>
     </change-notes>
-
-    <depends>org.jetbrains.kotlin</depends>
 
     <!-- Code Inspection Component  -->
     <extensions defaultExtensionNs="com.intellij">
