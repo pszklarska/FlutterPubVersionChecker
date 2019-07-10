@@ -1,7 +1,9 @@
 package pl.pszklarska.pubversionchecker
 
 import com.intellij.psi.PsiFile
+import kotlinx.coroutines.*
 import java.util.regex.Pattern
+import kotlin.coroutines.CoroutineContext
 
 const val REGEX_DEPENDENCY = ".*(?!version|sdk)\\b\\S+:.+\\.[0-9]+\\.[0-9]+(.*)"
 const val YML_EXTENSIONS = "yml"
@@ -9,9 +11,17 @@ const val YML_EXTENSIONS = "yml"
 class FileParser(
     private val file: PsiFile,
     private val dependencyChecker: DependencyChecker
-) {
+): CoroutineScope {
 
-    fun checkFile(): List<VersionDescription> {
+    private val parentJob = SupervisorJob()
+    private val scope = CoroutineScope(Dispatchers.IO + parentJob)
+
+    override val coroutineContext: CoroutineContext
+        get() = scope.coroutineContext
+
+    suspend fun checkFile(): List<VersionDescription> {
+        parentJob.cancelChildren(cause = null)
+
         return if (file.isPubspecFile()) {
             return getVersionsFromFile()
         } else {
@@ -19,11 +29,13 @@ class FileParser(
         }
     }
 
-    private fun getVersionsFromFile(): MutableList<VersionDescription> {
+    private suspend fun getVersionsFromFile(): MutableList<VersionDescription> {
         val problemDescriptionList = mutableListOf<VersionDescription>()
-        file.readPackageLines().forEach {
+
+        val lines: List<VersionDescription> = file.readPackageLines().map { async { mapToVersionDescription(it) } }.awaitAll()
+
+        lines.forEach { versionDescription ->
             try {
-                val versionDescription = mapToVersionDescription(it)
                 if (versionDescription.latestVersion != versionDescription.currentVersion) {
                     problemDescriptionList.add(versionDescription)
                 }

@@ -5,7 +5,7 @@ import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
-
+import kotlinx.coroutines.runBlocking
 
 class PubPackagesInspection : LocalInspectionTool() {
 
@@ -41,11 +41,14 @@ class YamlElementVisitor(
     override fun visitFile(file: PsiFile) {
         if (!isOnTheFly) return
 
-        val fileParser = FileParser(file, dependencyChecker)
-        val problemDescriptions = fileParser.checkFile()
+        runBlocking {
 
-        problemDescriptions.forEach {
-            holder.showProblem(file, it.counter, it.currentVersion, it.latestVersion)
+            val fileParser = FileParser(file, dependencyChecker)
+            val problemDescriptions = fileParser.checkFile()
+
+            problemDescriptions.forEach {
+                holder.showProblem(file, it.counter, it.currentVersion, it.latestVersion)
+            }
         }
     }
 }
