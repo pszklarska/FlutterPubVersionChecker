@@ -20,6 +20,9 @@ You can install plugin directly from IntelliJ IDEA or Android Studio:
 5. Tap on Install
 
 ## What's new?
+### 1.2.0
+- Improved performance of checking dependencies
+- Updated plugin to work with IntelliJ 2019.3.x
 ### 1.1.1
 - Added support for dependencies with version code
 - Removed notification on startup
