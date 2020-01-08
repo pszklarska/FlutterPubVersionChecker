@@ -1,6 +1,5 @@
 package pl.pszklarska.pubversionchecker
 
-import com.intellij.codeInsight.daemon.GroupNames
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
@@ -11,24 +10,8 @@ class PubPackagesInspection : LocalInspectionTool() {
 
     private val dependencyChecker = DependencyChecker()
 
-    override fun getDisplayName(): String {
-        return "Pub Packages latest versions"
-    }
-
-    override fun getGroupDisplayName(): String {
-        return GroupNames.DEPENDENCY_GROUP_NAME
-    }
-
-    override fun getShortName(): String {
-        return "PubVersions"
-    }
-
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return YamlElementVisitor(holder, isOnTheFly, dependencyChecker)
-    }
-
-    override fun isEnabledByDefault(): Boolean {
-        return true
     }
 }
 

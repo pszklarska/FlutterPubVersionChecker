@@ -8,7 +8,6 @@ import java.net.URL
 
 const val PUB_API_URL = "https://pub.dartlang.org/api/packages/"
 
-
 class DependencyChecker {
 
     private val dependencyList = mutableListOf<Dependency>()
