@@ -7,6 +7,9 @@
     <idea-version since-build="183.5153" until-build="193.*"/>
 
     <depends>org.jetbrains.kotlin</depends>
+    <depends>org.jetbrains.plugins.yaml</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.java</depends>
 
     <description><![CDATA[
     Plugin for checking the latest Pub packages versions.<br>
@@ -16,6 +19,10 @@
     </description>
 
     <change-notes><![CDATA[
+    <h2>1.2.1</h2>
+    <ul>
+    <li>Fixed compatibility issues</li>
+    </ul>
     <h2>1.2.0</h2>
     <ul>
     <li>Improved performance of checking dependencies</li>
@@ -25,17 +32,21 @@
     <ul>
     <li>Added support for dependencies with version code</li>
     <li>Removed notification on startup</li>
+    </ul>
     <h2>1.1.0</h2>
     <ul>
     <li>Fixed performance issues</li>
     <li>Added quick fix option to update dependencies</li>
+    </ul>
     <h2>1.0.1</h2>
     <ul>
     <li>Fixed bug caused by commented dependencies</li>
+    </ul>
     <h2>1.0.0</h2>
     <ul>
     <li>First version of plugin</li>
-    <li>Added support for checking packages version in format x.x.x</li></ul>
+    <li>Added support for checking packages version in format x.x.x</li>
+    </ul>
     ]]>
     </change-notes>
 
@@ -50,8 +61,5 @@
                 enabledByDefault="true"
                 implementationClass="pl.pszklarska.pubversionchecker.PubPackagesInspection"/>
     </extensions>
-
-    <depends>com.intellij.modules.lang</depends>
-    <depends>org.jetbrains.plugins.yaml</depends>
 
 </idea-plugin>
