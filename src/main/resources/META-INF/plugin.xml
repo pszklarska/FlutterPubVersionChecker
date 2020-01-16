@@ -4,7 +4,7 @@
     <vendor email="pszklarska@gmail.com"
             url="http://www.github.com/pszklarska/FlutterPubVersionChecker">Paulina Szklarska
     </vendor>
-    <idea-version since-build="183.5153" until-build="192.SNAPSHOT"/>
+    <idea-version since-build="183.5153" until-build="193.*"/>
 
     <depends>org.jetbrains.kotlin</depends>
 
@@ -16,6 +16,11 @@
     </description>
 
     <change-notes><![CDATA[
+    <h2>1.2.0</h2>
+    <ul>
+    <li>Improved performance of checking dependencies</li>
+    <li>Updated plugin to work with IntelliJ 2019.3.x</li>
+    </ul>
     <h2>1.1.1</h2>
     <ul>
     <li>Added support for dependencies with version code</li>
@@ -36,8 +41,17 @@
 
     <!-- Code Inspection Component  -->
     <extensions defaultExtensionNs="com.intellij">
-        <inspectionToolProvider implementation="pl.pszklarska.pubversionchecker.PackagesInspectionProvider"/>
+        <localInspection
+                language="yaml"
+                displayName="Pub Packages latest versions"
+                groupBundle="messages.InspectionsBundle"
+                groupKey="group.names.dependency.issues"
+                level="WARNING"
+                enabledByDefault="true"
+                implementationClass="pl.pszklarska.pubversionchecker.PubPackagesInspection"/>
     </extensions>
 
     <depends>com.intellij.modules.lang</depends>
+    <depends>org.jetbrains.plugins.yaml</depends>
+
 </idea-plugin>

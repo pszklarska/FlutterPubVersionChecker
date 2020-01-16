@@ -11,7 +11,7 @@ const val YML_EXTENSIONS = "yml"
 class FileParser(
     private val file: PsiFile,
     private val dependencyChecker: DependencyChecker
-): CoroutineScope {
+) : CoroutineScope {
 
     private val parentJob = SupervisorJob()
     private val scope = CoroutineScope(Dispatchers.IO + parentJob)
@@ -32,7 +32,8 @@ class FileParser(
     private suspend fun getVersionsFromFile(): MutableList<VersionDescription> {
         val problemDescriptionList = mutableListOf<VersionDescription>()
 
-        val lines: List<VersionDescription> = file.readPackageLines().map { async { mapToVersionDescription(it) } }.awaitAll()
+        val lines: List<VersionDescription> =
+            file.readPackageLines().map { async { mapToVersionDescription(it) } }.awaitAll()
 
         lines.forEach { versionDescription ->
             try {
