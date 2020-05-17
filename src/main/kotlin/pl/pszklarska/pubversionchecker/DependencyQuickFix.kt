@@ -8,7 +8,6 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.tree.IElementType
 
-
 class DependencyQuickFix(psiElement: PsiElement, private val latestVersion: String) :
     LocalQuickFixOnPsiElement(psiElement) {
     override fun getFamilyName(): String = "Update dependency"

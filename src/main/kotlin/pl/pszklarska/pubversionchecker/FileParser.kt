@@ -2,10 +2,12 @@ package pl.pszklarska.pubversionchecker
 
 import com.intellij.psi.PsiFile
 import kotlinx.coroutines.*
+import java.lang.Exception
 import java.util.regex.Pattern
 import kotlin.coroutines.CoroutineContext
 
-const val REGEX_DEPENDENCY = ".*(?!version|sdk)\\b\\S+:.+\\.[0-9]+\\.[0-9]+(.*)"
+const val REGEX_DEPENDENCY = """.*(?!version|sdk)\b\S+:.+\.[0-9]+\.[0-9]+(.*)"""
+const val REGEX_DEPENDENCY_VERSION = """\^(.*?)([\S]+)"""
 const val YML_EXTENSIONS = "yml"
 
 class FileParser(
@@ -48,14 +50,11 @@ class FileParser(
     }
 
     @Throws(UnableToGetLatestVersionException::class)
-    private fun mapToVersionDescription(it: Pair<String, Int>): VersionDescription {
-        val dependency = it.first
-        val counter = it.second
-
+    private fun mapToVersionDescription(dependency: String): VersionDescription {
         val latestVersion = dependencyChecker.getLatestVersion(dependency)
         val currentVersion = getCurrentVersion(dependency)
 
-        return VersionDescription(counter, currentVersion, latestVersion)
+        return VersionDescription(currentVersion, latestVersion, dependency)
     }
 }
 
@@ -63,16 +62,14 @@ private fun PsiFile.isPubspecFile(): Boolean {
     return fileType.defaultExtension == YML_EXTENSIONS && name.contains("pubspec")
 }
 
-private fun PsiFile.readPackageLines(): List<Pair<String, Int>> {
-    val linesList = mutableListOf<Pair<String, Int>>()
+private fun PsiFile.readPackageLines(): List<String> {
+    val linesList = mutableListOf<String>()
     var line = ""
-    var counter = 0
     text.forEach {
-        counter++
-        if (it == '\n') {
+        if (listOf('\n').contains(it)) {
             line = line.trim()
             if (!line.startsWith("#") && line.isPackageName()) {
-                linesList.add(line to counter - 2)
+                linesList.add(line)
                 printMessage("Found dependency: $line")
             }
             line = ""
@@ -83,22 +80,30 @@ private fun PsiFile.readPackageLines(): List<Pair<String, Int>> {
     return linesList
 }
 
-
 fun String.isPackageName(): Boolean {
     val regexPattern = Pattern.compile(REGEX_DEPENDENCY)
     return regexPattern.matcher(this).matches()
 }
 
-
 private fun getCurrentVersion(dependency: String): String {
-    val currentVersion = dependency.split(':')[1].replace("^", "").trim()
-    printMessage("Current version: $currentVersion")
-    return currentVersion
+    val regex = REGEX_DEPENDENCY_VERSION.toRegex()
+    try {
+        return regex.find(dependency)?.groupValues?.get(0)?.replace("^", "")!!.trim()
+    }catch (e: Exception){
+        print(e)
+           throw UnableToReadCurrentVersionException(dependency)
+    }
 }
 
+fun String.getPackageName(): String {
+    return this.trim().split(":")[0]
+}
+
+class UnableToReadCurrentVersionException(dependency: String) :
+    Exception("Cannot read current version number for dependency: $dependency")
 
 data class VersionDescription(
-    val counter: Int,
     val currentVersion: String,
-    val latestVersion: String
+    val latestVersion: String,
+    val line: String
 )

@@ -5,6 +5,9 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
 import kotlinx.coroutines.runBlocking
+import org.jetbrains.yaml.YAMLUtil
+import org.jetbrains.yaml.psi.impl.YAMLFileImpl
+import org.jetbrains.yaml.psi.impl.YAMLKeyValueImpl
 
 class PubPackagesInspection : LocalInspectionTool() {
 
@@ -30,7 +33,7 @@ class YamlElementVisitor(
             val problemDescriptions = fileParser.checkFile()
 
             problemDescriptions.forEach {
-                holder.showProblem(file, it.counter, it.currentVersion, it.latestVersion)
+                holder.showProblem(file, it.currentVersion, it.latestVersion, it.line)
             }
         }
     }
@@ -38,16 +41,21 @@ class YamlElementVisitor(
 
 private fun ProblemsHolder.showProblem(
     file: PsiFile,
-    counter: Int,
     currentVersion: String,
-    latestVersion: String
+    latestVersion: String,
+    line: String
 ) {
-
-    val psiElement = file.findElementAt(counter)!!
-    println("Found problem at $counter")
-    registerProblem(
-        psiElement,
-        "Version $currentVersion is different than the latest $latestVersion",
-        DependencyQuickFix(psiElement, latestVersion)
-    )
+    YAMLUtil.getTopLevelKeys((file as YAMLFileImpl))
+        .first { yamlKeyValue -> yamlKeyValue.keyText == "dependencies" }.children.first()
+        .let { dependencyBlock ->
+            dependencyBlock.children
+                .first { line.getPackageName() in it.text }
+                .let {
+                    registerProblem(
+                        it,
+                        "Version $currentVersion is different from the latest $latestVersion",
+                        DependencyQuickFix((it as YAMLKeyValueImpl).value!!, latestVersion)
+                    )
+                }
+        }
 }
