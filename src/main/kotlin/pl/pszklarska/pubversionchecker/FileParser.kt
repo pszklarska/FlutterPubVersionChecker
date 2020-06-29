@@ -2,7 +2,6 @@ package pl.pszklarska.pubversionchecker
 
 import com.intellij.psi.PsiFile
 import kotlinx.coroutines.*
-import java.lang.Exception
 import java.util.regex.Pattern
 import kotlin.coroutines.CoroutineContext
 
@@ -35,7 +34,8 @@ class FileParser(
         val problemDescriptionList = mutableListOf<VersionDescription>()
 
         val lines: List<VersionDescription> =
-            file.readPackageLines().map { async { mapToVersionDescription(it) } }.awaitAll()
+            file.readPackageLines().map { coroutineScope { async { mapToVersionDescription(it) } } }
+                .awaitAll()
 
         lines.forEach { versionDescription ->
             try {
@@ -89,9 +89,9 @@ private fun getCurrentVersion(dependency: String): String {
     val regex = REGEX_DEPENDENCY_VERSION.toRegex()
     try {
         return regex.find(dependency)?.groupValues?.get(0)?.replace("^", "")!!.trim()
-    }catch (e: Exception){
+    } catch (e: Exception) {
         print(e)
-           throw UnableToReadCurrentVersionException(dependency)
+        throw UnableToReadCurrentVersionException(dependency)
     }
 }
 
