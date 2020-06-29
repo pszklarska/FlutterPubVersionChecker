@@ -5,7 +5,7 @@ import kotlinx.coroutines.*
 import java.util.regex.Pattern
 import kotlin.coroutines.CoroutineContext
 
-const val REGEX_DEPENDENCY = """.*(?!version|sdk)\b\S+:.+\.[0-9]+\.[0-9]+(.*)"""
+const val REGEX_DEPENDENCY = """.*(?!version|sdk|ref)\b\S+:.+\.[0-9]+\.[0-9]+(.*)"""
 const val REGEX_DEPENDENCY_VERSION = """\^(.*?)([\S]+)"""
 const val YML_EXTENSIONS = "yml"
 

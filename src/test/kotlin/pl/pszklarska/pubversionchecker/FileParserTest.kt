@@ -22,9 +22,10 @@ class FileParserTest {
     }
 
     @Test
-    fun packageNameDoesNotContainVersionOrSdk() {
+    fun packageNameDoesNotContainKeywords() {
         assertFalse("version:1.0.0".isPackageName())
         assertFalse("sdk: '>=2.0.0 <3.0.0'".isPackageName())
+        assertFalse("ref: v1.0.0".isPackageName())
     }
 
     @Test
