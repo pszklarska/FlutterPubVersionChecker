@@ -4,7 +4,7 @@
     <vendor email="pszklarska@gmail.com"
             url="http://www.github.com/pszklarska/FlutterPubVersionChecker">Paulina Szklarska
     </vendor>
-    <idea-version since-build="183.5153" until-build="193.*"/>
+    <idea-version since-build="183.5153"/>
 
     <depends>org.jetbrains.kotlin</depends>
     <depends>org.jetbrains.plugins.yaml</depends>
