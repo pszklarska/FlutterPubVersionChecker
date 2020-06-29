@@ -13,9 +13,9 @@ class DependencyChecker {
     private val dependencyList = mutableListOf<Dependency>()
 
     fun getLatestVersion(dependency: String): String {
-        val packageName = dependency.trim().split(':')[0]
+        val packageName = dependency.getPackageName()
         val url = URL(PUB_API_URL + packageName)
-        printMessage("Checking latest version for: $packageName")
+        printMessage("Checking the latest version for: $packageName")
 
         val cachedDependency = dependencyList.find { it.packageName == packageName }
         if (cachedDependency != null) {

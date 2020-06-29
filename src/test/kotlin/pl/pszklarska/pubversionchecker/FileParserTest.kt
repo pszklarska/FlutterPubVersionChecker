@@ -19,6 +19,7 @@ class FileParserTest {
         assertTrue("test:1.0.0+4".isPackageName())
         assertTrue("test:1.0.0+hotfix.oopsie".isPackageName())
         assertTrue("test:1.0.0-alpha.12".isPackageName())
+        assertTrue("test:1.0.0-alpha.12 # link.to.pub".isPackageName())
     }
 
     @Test
@@ -26,5 +27,4 @@ class FileParserTest {
         assertFalse("version:1.0.0".isPackageName())
         assertFalse("sdk: '>=2.0.0 <3.0.0'".isPackageName())
     }
-
 }
