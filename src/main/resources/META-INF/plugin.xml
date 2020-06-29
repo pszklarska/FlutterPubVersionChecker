@@ -19,6 +19,11 @@
     </description>
 
     <change-notes><![CDATA[
+    <h2>1.2.2</h2>
+    <ul>
+    <li>Updated the plugin to work with the newest IntelliJ versions</li>
+    <li>Fixed issues with hosted or Git packages</li>
+    </ul>
     <h2>1.2.1</h2>
     <ul>
     <li>Fixed compatibility issues</li>
