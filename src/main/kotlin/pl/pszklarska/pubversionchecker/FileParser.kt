@@ -5,8 +5,8 @@ import kotlinx.coroutines.*
 import java.util.regex.Pattern
 import kotlin.coroutines.CoroutineContext
 
-const val REGEX_DEPENDENCY = """.*(?!version|sdk|ref)\b\S+:.+\.[0-9]+\.[0-9]+(.*)"""
-const val REGEX_DEPENDENCY_VERSION = """\^(.*?)([\S]+)"""
+const val REGEX_DEPENDENCY =
+    """^\s*(?!version|sdk|ref|url)\S+:\s*[<|=|>|^]*([0-9]+\.[0-9]+\.[0-9]+\+?\S*)"""
 const val YML_EXTENSIONS = "yml"
 
 class FileParser(
@@ -52,7 +52,7 @@ class FileParser(
     @Throws(UnableToGetLatestVersionException::class)
     private fun mapToVersionDescription(dependency: String): VersionDescription {
         val latestVersion = dependencyChecker.getLatestVersion(dependency)
-        val currentVersion = getCurrentVersion(dependency)
+        val currentVersion = dependency.extractVersion()
 
         return VersionDescription(currentVersion, latestVersion, dependency)
     }
@@ -82,25 +82,33 @@ private fun PsiFile.readPackageLines(): List<String> {
 
 fun String.isPackageName(): Boolean {
     val regexPattern = Pattern.compile(REGEX_DEPENDENCY)
-    return regexPattern.matcher(this).matches()
-}
-
-private fun getCurrentVersion(dependency: String): String {
-    val regex = REGEX_DEPENDENCY_VERSION.toRegex()
-    try {
-        return regex.find(dependency)?.groupValues?.get(0)?.replace("^", "")!!.trim()
-    } catch (e: Exception) {
-        print(e)
-        throw UnableToReadCurrentVersionException(dependency)
-    }
+    return regexPattern.matcher(this).find()
 }
 
 fun String.getPackageName(): String {
-    return this.trim().split(":")[0]
+    try {
+        return this.trim().split(":")[0]
+    } catch (e: Exception) {
+        print(e)
+        throw UnableToGetPackageNameException(this)
+    }
+}
+
+fun String.extractVersion(): String {
+    val regex = REGEX_DEPENDENCY.toRegex()
+    try {
+        return regex.find(this)?.groupValues?.get(1)!!
+    } catch (e: Exception) {
+        print(e)
+        throw UnableToReadCurrentVersionException(this)
+    }
 }
 
 class UnableToReadCurrentVersionException(dependency: String) :
     Exception("Cannot read current version number for dependency: $dependency")
+
+class UnableToGetPackageNameException(dependency: String) :
+    Exception("Cannot read package name for dependency: $dependency")
 
 data class VersionDescription(
     val currentVersion: String,
