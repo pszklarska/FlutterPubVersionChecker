@@ -19,6 +19,10 @@
     </description>
 
     <change-notes><![CDATA[
+    <h2>1.2.3</h2>
+    <ul>
+    <li>Fixed issue with custom hosted url addresses</li>
+    </ul>
     <h2>1.2.2</h2>
     <ul>
     <li>Updated the plugin to work with the newest IntelliJ versions</li>

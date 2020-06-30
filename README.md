@@ -21,23 +21,25 @@ You can install plugin directly from IntelliJ IDEA or Android Studio:
 
 ## What's new?
 =======
-### 1.2.2
+### 1.2.3 (30 Jun 2020)
+- Fixed issue with custom hosted url addresses
+### 1.2.2 (29 Jun 2020)
 - Updated the plugin to work with the newest IntelliJ versions
 - Fixed issues with hosted or Git packages  
-### 1.2.1
+### 1.2.1 (16 Jan 2020)
 - Fixed compatibility issues
-### 1.2.0
+### 1.2.0 (16 Jan 2020)
 - Improved performance of checking dependencies
 - Updated the plugin to work with IntelliJ 2019.3.x
-### 1.1.1
+### 1.1.1 (13 Jun 2019)
 - Added support for dependencies with version code
 - Removed notification on startup
-### 1.1.0
+### 1.1.0 (21 May 2019)
 - Fixed performance issues
 - Added quick fix option to update dependencies
-### 1.0.1
+### 1.0.1 (13 May 2019)
 - Fixed bug caused by commented dependencies</li>
-### 1.0.0
+### 1.0.0 (10 May 2019)
 - First version of plugin</li>
 - Added support for checking packages version in a format x.x.x</li></ul>
 
