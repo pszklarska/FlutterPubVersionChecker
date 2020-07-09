@@ -46,11 +46,11 @@ private fun ProblemsHolder.showProblem(
     line: String
 ) {
     YAMLUtil.getTopLevelKeys((file as YAMLFileImpl))
-        .first { yamlKeyValue -> yamlKeyValue.keyText == "dependencies" }.children.first()
-        .let { dependencyBlock ->
+        .firstOrNull() { yamlKeyValue -> yamlKeyValue.keyText == "dependencies" }?.children?.firstOrNull()
+        ?.let { dependencyBlock ->
             dependencyBlock.children
-                .first { line.getPackageName() in it.text }
-                .let {
+                .firstOrNull() { line.getPackageName() in it.text }
+                ?.let {
                     registerProblem(
                         it,
                         "Version $currentVersion is different from the latest $latestVersion",
