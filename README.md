@@ -21,6 +21,8 @@ You can install plugin directly from IntelliJ IDEA or Android Studio:
 
 ## What's new?
 =======
+### 1.2.4 (9 Jul) 2020)
+- Fixed crash on the startup
 ### 1.2.3 (30 Jun 2020)
 - Fixed issue with custom hosted url addresses
 ### 1.2.2 (29 Jun 2020)
