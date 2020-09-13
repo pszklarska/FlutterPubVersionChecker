@@ -34,8 +34,7 @@ class FileParser(
         val problemDescriptionList = mutableListOf<VersionDescription>()
 
         val lines: List<VersionDescription> =
-            file.readPackageLines().map { coroutineScope { async { mapToVersionDescription(it) } } }
-                .awaitAll()
+            file.readPackageLines().map { async { mapToVersionDescription(it) } }.awaitAll()
 
         lines.forEach { versionDescription ->
             try {
@@ -50,11 +49,14 @@ class FileParser(
     }
 
     @Throws(UnableToGetLatestVersionException::class)
-    private fun mapToVersionDescription(dependency: String): VersionDescription {
+    private fun mapToVersionDescription(it: Pair<String, Int>): VersionDescription {
+        val dependency = it.first
+        val index = it.second
+
         val latestVersion = dependencyChecker.getLatestVersion(dependency)
         val currentVersion = dependency.extractVersion()
 
-        return VersionDescription(currentVersion, latestVersion, dependency)
+        return VersionDescription(currentVersion, latestVersion, dependency, index)
     }
 }
 
@@ -62,14 +64,16 @@ private fun PsiFile.isPubspecFile(): Boolean {
     return fileType.defaultExtension == YML_EXTENSIONS && name.contains("pubspec")
 }
 
-private fun PsiFile.readPackageLines(): List<String> {
-    val linesList = mutableListOf<String>()
+private fun PsiFile.readPackageLines(): List<Pair<String, Int>> {
+    val linesList = mutableListOf<Pair<String, Int>>()
     var line = ""
+    var counter = 0
     text.forEach {
-        if (listOf('\n').contains(it)) {
+        counter++
+        if (it == '\n') {
             line = line.trim()
             if (!line.startsWith("#") && line.isPackageName()) {
-                linesList.add(line)
+                linesList.add(line to counter - 2)
                 printMessage("Found dependency: $line")
             }
             line = ""
@@ -113,5 +117,6 @@ class UnableToGetPackageNameException(dependency: String) :
 data class VersionDescription(
     val currentVersion: String,
     val latestVersion: String,
-    val line: String
+    val line: String,
+    val index: Int
 )
