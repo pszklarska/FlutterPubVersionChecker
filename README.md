@@ -21,7 +21,10 @@ You can install plugin directly from IntelliJ IDEA or Android Studio:
 
 ## What's new?
 =======
-### 1.2.4 (9 Jul) 2020)
+### 1.2.5 (13 Sep 2020)
+- Fixed crash when updating dependency
+- Fixed checking dependencies with the same suffix ([#21](https://github.com/pszklarska/FlutterPubVersionChecker/issues/21)) 
+### 1.2.4 (9 Jul 2020)
 - Fixed crash on the startup
 ### 1.2.3 (30 Jun 2020)
 - Fixed issue with custom hosted url addresses

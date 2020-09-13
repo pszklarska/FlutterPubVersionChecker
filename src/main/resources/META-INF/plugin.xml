@@ -19,6 +19,11 @@
     </description>
 
     <change-notes><![CDATA[
+    <h2>1.2.5</h2>
+    <ul>
+    <li>Fixed crash when updating dependency</li>
+    <li>Fixed checking dependencies with the same suffix</li>
+    </ul>
     <h2>1.2.4</h2>
     <ul>
     <li>Fixed crash on the startup</li>
