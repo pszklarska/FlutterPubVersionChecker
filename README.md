@@ -20,7 +20,7 @@ You can install plugin directly from IntelliJ IDEA or Android Studio:
 5. Tap on Install
 
 ## What's new?
-=======
+
 ### 1.2.5 (13 Sep 2020)
 - Fixed crash when updating dependency
 - Fixed checking dependencies with the same suffix ([#21](https://github.com/pszklarska/FlutterPubVersionChecker/issues/21)) 
@@ -51,3 +51,7 @@ You can install plugin directly from IntelliJ IDEA or Android Studio:
 ## Contributions
 
 Feel free to send Pull Request or file an Issue!
+
+## Sponsor this project!
+
+Hey, do you look like this project? If you want to support open source activity, [consider sponsoring my profile](https://github.com/sponsors/pszklarska) ❤️
