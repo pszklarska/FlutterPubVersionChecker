@@ -4,7 +4,7 @@
 
 ## [Unreleased]
 
-## [1.2.6]
+## [1.2.6] - 2021-10-20
 ### Added
 - Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
 
