@@ -34,7 +34,15 @@ class FileParser(
         val problemDescriptionList = mutableListOf<VersionDescription>()
 
         val lines: List<VersionDescription> =
-            file.readPackageLines().map { async { mapToVersionDescription(it) } }.awaitAll()
+            file.readPackageLines().map {
+                async {
+                    try {
+                        mapToVersionDescription(it)
+                    } catch (e: UnableToGetLatestVersionException) {
+                        null
+                    }
+                }
+            }.awaitAll().filterNotNull()
 
         lines.forEach { versionDescription ->
             try {
