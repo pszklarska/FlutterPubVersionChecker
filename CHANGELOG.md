@@ -6,6 +6,10 @@
 ### Added
 - Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
 
+### Fixed
+- Decrypting response from Pub.dev API that caused NullPointerException
+- Crash for one dependency doesn't crash the whole file 
+
 ## [1.2.5] - 2020-09-13
 - Fixed crash when updating dependency
 - Fixed checking dependencies with the same suffix ([#21](https://github.com/pszklarska/FlutterPubVersionChecker/issues/21))

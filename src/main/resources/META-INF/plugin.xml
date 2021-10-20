@@ -20,6 +20,6 @@
                 groupKey="group.names.dependency.issues"
                 level="WARNING"
                 enabledByDefault="true"
-                implementationClass="pl.pszklarska.pubversionchecker.PubPackagesInspection"/>
+                implementationClass="pl.pszklarska.pubversionchecker.inspection.PubPackagesInspection"/>
     </extensions>
 </idea-plugin>

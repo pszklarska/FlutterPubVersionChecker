@@ -1,24 +1,25 @@
-package pl.pszklarska.pubversionchecker
+package pl.pszklarska.pubversionchecker.inspection
 
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
 import kotlinx.coroutines.runBlocking
+import pl.pszklarska.pubversionchecker.quickfix.DependencyQuickFix
+import pl.pszklarska.pubversionchecker.util.DependencyUtil
+import pl.pszklarska.pubversionchecker.util.VersionsRepository
+import pl.pszklarska.pubversionchecker.util.YamlParser
 
 class PubPackagesInspection : LocalInspectionTool() {
 
-    private val dependencyChecker = DependencyChecker()
-
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
-        return YamlElementVisitor(holder, isOnTheFly, dependencyChecker)
+        return YamlElementVisitor(holder, isOnTheFly)
     }
 }
 
 class YamlElementVisitor(
     private val holder: ProblemsHolder,
     private val isOnTheFly: Boolean,
-    private val dependencyChecker: DependencyChecker
 ) : PsiElementVisitor() {
 
     override fun visitFile(file: PsiFile) {
@@ -26,11 +27,13 @@ class YamlElementVisitor(
 
         runBlocking {
 
-            val fileParser = FileParser(file, dependencyChecker)
-            val problemDescriptions = fileParser.checkFile()
+            val versionsRepository = VersionsRepository()
+            val dependencyUtil = DependencyUtil(versionsRepository)
+            val yamlParser = YamlParser(file, dependencyUtil)
+            val problemDescriptions = yamlParser.inspectFile()
 
             problemDescriptions.forEach {
-                holder.showProblem(file, it.currentVersion, it.latestVersion, it.line, it.index)
+                holder.showProblem(file, it.latestVersion, it.index)
             }
         }
     }
@@ -38,17 +41,14 @@ class YamlElementVisitor(
 
 private fun ProblemsHolder.showProblem(
     file: PsiFile,
-    currentVersion: String,
     latestVersion: String,
-    line: String,
     index: Int
 ) {
 
     val psiElement = file.findElementAt(index)!!
-    println("Found problem at $line")
     registerProblem(
         psiElement,
-        "Version $currentVersion is different from the latest $latestVersion",
+        "Latest available version is: $latestVersion",
         DependencyQuickFix(psiElement, latestVersion)
     )
 }

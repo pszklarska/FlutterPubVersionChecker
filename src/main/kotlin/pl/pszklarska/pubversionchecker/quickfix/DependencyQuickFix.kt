@@ -1,4 +1,4 @@
-package pl.pszklarska.pubversionchecker
+package pl.pszklarska.pubversionchecker.quickfix
 
 import com.intellij.codeInspection.LocalQuickFixOnPsiElement
 import com.intellij.lang.Language
@@ -8,8 +8,12 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.tree.IElementType
 
+const val DEBUG_NAME = "text"
+const val YAML = "yaml"
+
 class DependencyQuickFix(psiElement: PsiElement, private val latestVersion: String) :
     LocalQuickFixOnPsiElement(psiElement) {
+
     override fun getFamilyName(): String = "Update dependency"
 
     override fun getText(): String = "Update dependency"
@@ -19,8 +23,8 @@ class DependencyQuickFix(psiElement: PsiElement, private val latestVersion: Stri
         val psiExpression =
             factory.createDummyHolder(
                 "^$latestVersion", IElementType(
-                    "text",
-                    Language.findLanguageByID("yaml")
+                    DEBUG_NAME,
+                    Language.findLanguageByID(YAML)
                 ), null
             )
         startElement.replace(psiExpression)
