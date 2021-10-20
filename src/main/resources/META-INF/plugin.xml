@@ -1,72 +1,15 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <id>pl.pszklarska.pubversionchecker</id>
     <name>Flutter Pub Version Checker</name>
     <vendor email="pszklarska@gmail.com"
             url="http://www.github.com/pszklarska/FlutterPubVersionChecker">Paulina Szklarska
     </vendor>
-    <idea-version since-build="183.5153"/>
 
     <depends>org.jetbrains.kotlin</depends>
     <depends>org.jetbrains.plugins.yaml</depends>
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.java</depends>
-
-    <description><![CDATA[
-    Plugin for checking the latest Pub packages versions.<br>
-    It will automatically run inspection in your pubspec.yaml file to check all dependencies and compare versions
-    with the latest versions from <a href="https://pub.dev">Pub package repository</a>.
-    ]]>
-    </description>
-
-    <change-notes><![CDATA[
-    <h2>1.2.5</h2>
-    <ul>
-    <li>Fixed crash when updating dependency</li>
-    <li>Fixed checking dependencies with the same suffix</li>
-    </ul>
-    <h2>1.2.4</h2>
-    <ul>
-    <li>Fixed crash on the startup</li>
-    </ul>
-    <h2>1.2.3</h2>
-    <ul>
-    <li>Fixed issue with custom hosted url addresses</li>
-    </ul>
-    <h2>1.2.2</h2>
-    <ul>
-    <li>Updated the plugin to work with the newest IntelliJ versions</li>
-    <li>Fixed issues with hosted or Git packages</li>
-    </ul>
-    <h2>1.2.1</h2>
-    <ul>
-    <li>Fixed compatibility issues</li>
-    </ul>
-    <h2>1.2.0</h2>
-    <ul>
-    <li>Improved performance of checking dependencies</li>
-    <li>Updated plugin to work with IntelliJ 2019.3.x</li>
-    </ul>
-    <h2>1.1.1</h2>
-    <ul>
-    <li>Added support for dependencies with version code</li>
-    <li>Removed notification on startup</li>
-    </ul>
-    <h2>1.1.0</h2>
-    <ul>
-    <li>Fixed performance issues</li>
-    <li>Added quick fix option to update dependencies</li>
-    </ul>
-    <h2>1.0.1</h2>
-    <ul>
-    <li>Fixed bug caused by commented dependencies</li>
-    </ul>
-    <h2>1.0.0</h2>
-    <ul>
-    <li>First version of plugin</li>
-    <li>Added support for checking packages version in format x.x.x</li>
-    </ul>
-    ]]>
-    </change-notes>
 
     <!-- Code Inspection Component  -->
     <extensions defaultExtensionNs="com.intellij">
@@ -79,5 +22,4 @@
                 enabledByDefault="true"
                 implementationClass="pl.pszklarska.pubversionchecker.PubPackagesInspection"/>
     </extensions>
-
 </idea-plugin>
