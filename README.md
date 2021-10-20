@@ -19,13 +19,10 @@ You can install plugin directly from IntelliJ IDEA or Android Studio:
 
 ## How to use?
 
-Once plugin is installed, go to the pubspec.yaml file. If plugin finds that newer version is available, you'll see it highlighted:
+Once plugin is installed, go to the pubspec.yaml file. If plugin finds that newer version is available, you'll see it highlighted.
+To fix that, press Cmd+Enter (Alt+Enter) or click the action indicator to the left of the caret to open the action list and choose "Update dependency".
 
-<img src="/img/screen1.png" alt="Flutter Pub Version Checker in action" width="640"/>
-
-To fix that, press Cmd+Enter (Alt+Enter) or click the action indicator to the left of the caret to open the action list and choose "Update dependency":
-
-<img src="/img/quickfix.gif" alt="Flutter Pub Version Checker quick fix"/>
+<img src="/img/quick_fix.png" alt="Flutter Pub Version Checker in action"/>
 
 ## What's new?
 
