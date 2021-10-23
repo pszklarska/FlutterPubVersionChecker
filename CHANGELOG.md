@@ -3,12 +3,15 @@
 # Flutter Pub Version Checker Changelog
 
 ## [Unreleased]
+
+## [1.2.7] - 2021-10-23
 ### Removed
 - Support for older IDE versions
 
 ## [1.2.6] - 2021-10-20
 ### Added
 - Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
+
 
 ### Fixed
 - Decrypting response from Pub.dev API that caused NullPointerException
