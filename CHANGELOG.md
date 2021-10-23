@@ -3,6 +3,8 @@
 # Flutter Pub Version Checker Changelog
 
 ## [Unreleased]
+### Removed
+- Support for older IDE versions
 
 ## [1.2.6] - 2021-10-20
 ### Added
