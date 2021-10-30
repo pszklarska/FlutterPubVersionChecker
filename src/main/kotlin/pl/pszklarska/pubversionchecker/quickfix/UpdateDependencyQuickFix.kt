@@ -8,25 +8,27 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.tree.IElementType
 
+
 const val DEBUG_NAME = "text"
 const val YAML = "yaml"
 
-class DependencyQuickFix(psiElement: PsiElement, private val latestVersion: String) :
+class UpdateDependencyQuickFix(
+    psiElement: PsiElement,
+    private val latestVersion: String,
+    private val packageName: String
+) :
     LocalQuickFixOnPsiElement(psiElement) {
 
-    override fun getFamilyName(): String = "Update dependency"
+    private val description = "Update $packageName"
 
-    override fun getText(): String = "Update dependency"
+    override fun getFamilyName(): String = description
+
+    override fun getText(): String = description
 
     override fun invoke(project: Project, file: PsiFile, startElement: PsiElement, endElement: PsiElement) {
-        val factory = JavaPsiFacade.getInstance(project).elementFactory
-        val psiExpression =
-            factory.createDummyHolder(
-                "^$latestVersion", IElementType(
-                    DEBUG_NAME,
-                    Language.findLanguageByID(YAML)
-                ), null
-            )
+        val factory = JavaPsiFacade.getElementFactory(project)
+        val iElementType = IElementType(DEBUG_NAME, Language.findLanguageByID(YAML))
+        val psiExpression = factory.createDummyHolder("^$latestVersion", iElementType, null)
         startElement.replace(psiExpression)
     }
 }

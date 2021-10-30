@@ -1,14 +1,17 @@
 package pl.pszklarska.pubversionchecker.inspection
 
 import com.intellij.codeInspection.LocalInspectionTool
+import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
 import kotlinx.coroutines.runBlocking
-import pl.pszklarska.pubversionchecker.quickfix.DependencyQuickFix
-import pl.pszklarska.pubversionchecker.util.DependencyUtil
+import org.jetbrains.yaml.psi.YamlPsiElementVisitor
+import pl.pszklarska.pubversionchecker.parsing.YamlParser
+import pl.pszklarska.pubversionchecker.quickfix.UpdateAllDependenciesQuickFix
+import pl.pszklarska.pubversionchecker.quickfix.UpdateDependencyQuickFix
 import pl.pszklarska.pubversionchecker.util.VersionsRepository
-import pl.pszklarska.pubversionchecker.util.YamlParser
+import pl.pszklarska.pubversionchecker.util.isPubspecFile
 
 class PubPackagesInspection : LocalInspectionTool() {
 
@@ -20,35 +23,32 @@ class PubPackagesInspection : LocalInspectionTool() {
 class YamlElementVisitor(
     private val holder: ProblemsHolder,
     private val isOnTheFly: Boolean,
-) : PsiElementVisitor() {
+) : YamlPsiElementVisitor() {
+
+    private val updateOneDependencyDescription = "Latest available version is: "
 
     override fun visitFile(file: PsiFile) {
         if (!isOnTheFly) return
+        if (!file.isPubspecFile()) return
 
         runBlocking {
 
             val versionsRepository = VersionsRepository()
-            val dependencyUtil = DependencyUtil(versionsRepository)
-            val yamlParser = YamlParser(file, dependencyUtil)
-            val problemDescriptions = yamlParser.inspectFile()
+            val yamlParser = YamlParser(file.text, versionsRepository)
+            val notMatchingDependencies = yamlParser.inspectFile()
 
-            problemDescriptions.forEach {
-                holder.showProblem(file, it.latestVersion, it.index)
+            notMatchingDependencies.forEach {
+                val psiElement = file.findElementAt(it.dependency.index)!!
+
+                holder.registerProblem(
+                    psiElement,
+                    updateOneDependencyDescription + it.latestVersion,
+                    ProblemHighlightType.WARNING,
+                    UpdateDependencyQuickFix(psiElement, it.latestVersion, it.dependency.packageName),
+                    UpdateAllDependenciesQuickFix(file, notMatchingDependencies)
+                )
+
             }
         }
     }
-}
-
-private fun ProblemsHolder.showProblem(
-    file: PsiFile,
-    latestVersion: String,
-    index: Int
-) {
-
-    val psiElement = file.findElementAt(index)!!
-    registerProblem(
-        psiElement,
-        "Latest available version is: $latestVersion",
-        DependencyQuickFix(psiElement, latestVersion)
-    )
 }
