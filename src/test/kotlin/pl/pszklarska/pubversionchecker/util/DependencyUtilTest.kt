@@ -35,41 +35,41 @@ class DependencyUtilTest {
 
 
     @Test
-    fun packageNameContainsNameAndThreeNumbers() {
-        assertTrue("test:1.0.0".isPackageName())
-        assertFalse(":1.0.0".isPackageName())
-        assertFalse("test".isPackageName())
-        assertFalse("description: Flutter POS application".isPackageName())
+    fun dependencyNameContainsNameAndThreeNumbers() {
+        assertTrue("test:1.0.0".isDependencyName())
+        assertFalse(":1.0.0".isDependencyName())
+        assertFalse("test".isDependencyName())
+        assertFalse("description: Flutter POS application".isDependencyName())
     }
 
     @Test
-    fun packageNameContainsSuffix() {
-        assertTrue("test:1.0.0+4".isPackageName())
-        assertTrue("test:1.0.0+hotfix.oopsie".isPackageName())
-        assertTrue("test:1.0.0-alpha.12".isPackageName())
+    fun dependencyNameContainsSuffix() {
+        assertTrue("test:1.0.0+4".isDependencyName())
+        assertTrue("test:1.0.0+hotfix.oopsie".isDependencyName())
+        assertTrue("test:1.0.0-alpha.12".isDependencyName())
     }
 
     @Test
-    fun packageNameDoesNotContainKeywords() {
-        assertFalse("version: 1.0.0".isPackageName())
-        assertFalse("sdk: 2.0.0".isPackageName())
-        assertFalse("ref: v1.0.0".isPackageName())
-        assertFalse("url: http://0.0.0.0:4000".isPackageName())
+    fun dependencyNameDoesNotContainKeywords() {
+        assertFalse("version: 1.0.0".isDependencyName())
+        assertFalse("sdk: 2.0.0".isDependencyName())
+        assertFalse("ref: v1.0.0".isDependencyName())
+        assertFalse("url: http://0.0.0.0:4000".isDependencyName())
     }
 
     @Test
-    fun packageNameContainsComments() {
-        assertTrue("test: 1.0.0-alpha.12 # link.to.pub".isPackageName())
-        assertFalse("# link.to.pub".isPackageName())
+    fun dependencyNameContainsComments() {
+        assertTrue("test: 1.0.0-alpha.12 # link.to.pub".isDependencyName())
+        assertFalse("# link.to.pub".isDependencyName())
     }
 
     @Test
-    fun packageNameContainsDifferentVersionConstraints() {
-        assertTrue("test: ^1.2.3".isPackageName())
-        assertTrue("test: >=1.2.3".isPackageName())
-        assertTrue("test: >1.2.3".isPackageName())
-        assertTrue("test: <=2.0.0".isPackageName())
-        assertTrue("test: <2.0.0".isPackageName())
+    fun dependencyNameContainsDifferentVersionConstraints() {
+        assertTrue("test: ^1.2.3".isDependencyName())
+        assertTrue("test: >=1.2.3".isDependencyName())
+        assertTrue("test: >1.2.3".isDependencyName())
+        assertTrue("test: <=2.0.0".isDependencyName())
+        assertTrue("test: <2.0.0".isDependencyName())
     }
 
     @Test

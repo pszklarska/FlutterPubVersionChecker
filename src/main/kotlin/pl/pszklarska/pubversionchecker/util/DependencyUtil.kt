@@ -1,6 +1,7 @@
 package pl.pszklarska.pubversionchecker.util
 
 import pl.pszklarska.pubversionchecker.dto.Dependency
+import java.util.regex.Pattern
 
 const val DEPENDENCIES_PATTERN = """^\s*(?!version|sdk|ref|url)\S+:\s*[<|=>^]*([0-9]+\.[0-9]+\.[0-9]+\+?\S*)"""
 
@@ -18,7 +19,7 @@ fun String.getDependencies(): List<Dependency> {
         counter++
         if (it == '\n') {
             line = line.trim()
-            if (!line.startsWith("#") && line.isPackageName()) {
+            if (!line.startsWith("#") && line.isDependencyName()) {
                 val packageName = line.getPackageName()
                 val currentVersion = line.getVersionName()
                 dependencyList.add(Dependency(packageName, currentVersion, counter - 2))
@@ -33,12 +34,12 @@ fun String.getDependencies(): List<Dependency> {
 }
 
 /**
- * Return if given string is a valid package name
+ * Return if given string is a valid dependency, i.e. contains valid package name and version number
  */
 
-fun String.isPackageName(): Boolean {
-    val regexPattern = DEPENDENCIES_PATTERN.toRegex()
-    return regexPattern.matches(this)
+fun String.isDependencyName(): Boolean {
+    val regexPattern = Pattern.compile(DEPENDENCIES_PATTERN)
+    return regexPattern.matcher(this).find()
 }
 
 /**
