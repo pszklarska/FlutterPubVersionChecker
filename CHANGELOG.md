@@ -3,6 +3,8 @@
 # Flutter Pub Version Checker Changelog
 
 ## [Unreleased]
+### Added
+- Functionality to update all dependencies
 
 ## [1.2.7] - 2021-10-23
 ### Removed

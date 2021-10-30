@@ -25,6 +25,10 @@ repositories {
     mavenCentral()
 }
 
+dependencies {
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
+}
+
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
 intellij {
     pluginName.set(properties("pluginName"))

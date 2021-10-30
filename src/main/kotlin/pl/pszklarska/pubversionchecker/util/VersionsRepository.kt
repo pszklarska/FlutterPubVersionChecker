@@ -13,9 +13,8 @@ class VersionsRepository {
 
     private val dependencyList = mutableListOf<Dependency>()
 
-    fun getLatestVersion(dependencyName: String): String {
-        val packageName = dependencyName.getPackageName()
-        printMessage("Checking the latest version for: $packageName")
+    fun getLatestVersion(packageName: String): String {
+        printMessage("Checking latest version for: $packageName")
 
         val cachedDependency = dependencyList.find { it.packageName == packageName }
         return if (cachedDependency != null) {
@@ -42,15 +41,6 @@ class VersionsRepository {
         return gson.fromJson(responseString, Response::class.java)
     }
 
-}
-
-fun String.getPackageName(): String {
-    try {
-        return this.trim().split(":")[0]
-    } catch (e: Exception) {
-        print(e)
-        throw UnableToGetPackageNameException(this)
-    }
 }
 
 class UnableToGetLatestVersionException(dependency: String) :
