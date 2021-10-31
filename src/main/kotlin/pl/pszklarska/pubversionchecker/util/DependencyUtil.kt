@@ -3,7 +3,7 @@ package pl.pszklarska.pubversionchecker.util
 import pl.pszklarska.pubversionchecker.dto.Dependency
 import java.util.regex.Pattern
 
-const val DEPENDENCIES_PATTERN = """^\s*(?!(?:version|sdk|ref|url|flutter)\b)\S+:\s*[<|=>^]*([0-9]+\.[0-9]+\.[0-9]+\+?\S*)"""
+const val DEPENDENCIES_PATTERN = """^(?!#)\s*(?!(?:version|sdk|ref|url|flutter)\b)(\S+):\s*[<|=>^]*([0-9]+\.[0-9]+\.[0-9]+\+?\S*)"""
 
 
 /**
@@ -19,7 +19,7 @@ fun String.getDependencies(): List<Dependency> {
         counter++
         if (it == '\n') {
             line = line.trim()
-            if (!line.startsWith("#") && line.isDependencyName()) {
+            if (line.isDependencyName()) {
                 val packageName = line.getPackageName()
                 val currentVersion = line.getVersionName()
                 dependencyList.add(Dependency(packageName, currentVersion, counter - 2))
@@ -47,8 +47,9 @@ fun String.isDependencyName(): Boolean {
  */
 
 fun String.getPackageName(): String {
+    val regex = DEPENDENCIES_PATTERN.toRegex()
     try {
-        return this.trim().split(":")[0]
+        return regex.find(this)?.groupValues?.get(1)!!
     } catch (e: Exception) {
         print(e)
         throw UnableToGetPackageNameException(this)
@@ -62,7 +63,7 @@ fun String.getPackageName(): String {
 fun String.getVersionName(): String {
     val regex = DEPENDENCIES_PATTERN.toRegex()
     try {
-        return regex.find(this)?.groupValues?.get(1)!!
+        return regex.find(this)?.groupValues?.get(2)!!
     } catch (e: Exception) {
         print(e)
         throw UnableToReadCurrentVersionException(this)

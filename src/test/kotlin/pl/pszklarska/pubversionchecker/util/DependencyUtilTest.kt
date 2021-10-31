@@ -70,6 +70,7 @@ class DependencyUtilTest {
     @Test
     fun dependencyNameContainsComments() {
         assertTrue("test: 1.0.0-alpha.12 # link.to.pub".isDependencyName())
+        assertFalse("#link.to.pub".isDependencyName())
         assertFalse("# link.to.pub".isDependencyName())
     }
 
