@@ -3,8 +3,10 @@
 # Flutter Pub Version Checker Changelog
 
 ## [Unreleased]
+
+## [1.3.1] - 2021-10-31
 ### Fixed
-- Excluding dependencies with reserved keywords such as flutter, sdk, url etc. 
+- Excluding dependencies with reserved keywords such as flutter, sdk, url etc.
 
 ## [1.3.0] - 2021-10-30
 ### Added
