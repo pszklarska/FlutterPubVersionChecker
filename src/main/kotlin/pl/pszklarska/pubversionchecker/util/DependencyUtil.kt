@@ -3,7 +3,7 @@ package pl.pszklarska.pubversionchecker.util
 import pl.pszklarska.pubversionchecker.dto.Dependency
 import java.util.regex.Pattern
 
-const val DEPENDENCIES_PATTERN = """^\s*(?!version|sdk|ref|url)\S+:\s*[<|=>^]*([0-9]+\.[0-9]+\.[0-9]+\+?\S*)"""
+const val DEPENDENCIES_PATTERN = """^\s*(?!(?:version|sdk|ref|url|flutter)\b)\S+:\s*[<|=>^]*([0-9]+\.[0-9]+\.[0-9]+\+?\S*)"""
 
 
 /**
