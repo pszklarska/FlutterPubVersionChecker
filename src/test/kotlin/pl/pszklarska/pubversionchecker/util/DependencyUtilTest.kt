@@ -50,16 +50,27 @@ class DependencyUtilTest {
     }
 
     @Test
-    fun dependencyNameDoesNotContainKeywords() {
+    fun dependencyNameDoesNotContainKeywords_invalidDependencyName() {
         assertFalse("version: 1.0.0".isDependencyName())
         assertFalse("sdk: 2.0.0".isDependencyName())
         assertFalse("ref: v1.0.0".isDependencyName())
         assertFalse("url: http://0.0.0.0:4000".isDependencyName())
+        assertFalse("flutter: ^0.1.2".isDependencyName())
+    }
+
+    @Test
+    fun dependencyNameDoesNotContainKeywords_validDependencyName() {
+        assertTrue("flutter_svg: ^0.1.2".isDependencyName())
+        assertTrue("test_version: 0.1.2".isDependencyName())
+        assertTrue("test_sdk_test: 2.0.0".isDependencyName())
+        assertTrue("url_match: 1.0.0".isDependencyName())
+        assertTrue("abc_url: 1.0.0".isDependencyName())
     }
 
     @Test
     fun dependencyNameContainsComments() {
         assertTrue("test: 1.0.0-alpha.12 # link.to.pub".isDependencyName())
+        assertFalse("#link.to.pub".isDependencyName())
         assertFalse("# link.to.pub".isDependencyName())
     }
 
