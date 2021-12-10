@@ -9,7 +9,7 @@ const val PUB_API_URL = "https://pub.dartlang.org/api/packages/"
 class VersionsRepository {
 
     private val gson = Gson()
-    private val httpClient = HttpClient()
+    private val httpClient = DependencyHttpClient()
 
     private val dependencyList = mutableListOf<Dependency>()
 
@@ -28,7 +28,7 @@ class VersionsRepository {
 
     private fun fetchDependencyVersion(packageName: String): String {
         try {
-            val jsonResponse = httpClient.getFileAsString(PUB_API_URL + packageName)
+            val jsonResponse = httpClient.getContentAsString(PUB_API_URL + packageName)
             val response = parseResponse(jsonResponse)
             return response.latest.version.trim()
         } catch (e: IOException) {
