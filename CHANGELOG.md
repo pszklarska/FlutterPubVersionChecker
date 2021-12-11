@@ -3,6 +3,9 @@
 # Flutter Pub Version Checker Changelog
 
 ## [Unreleased]
+### Added
+- Crash reporting
+
 ### Fixed
 - Dependency versions not being retrieved properly
 

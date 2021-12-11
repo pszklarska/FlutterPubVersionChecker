@@ -1,9 +1,12 @@
 package pl.pszklarska.pubversionchecker.parsing
 
+import io.sentry.Sentry
 import kotlinx.coroutines.*
 import pl.pszklarska.pubversionchecker.dto.DependencyDescription
-import pl.pszklarska.pubversionchecker.util.UnableToGetLatestVersionException
 import pl.pszklarska.pubversionchecker.util.VersionsRepository
+import pl.pszklarska.pubversionchecker.util.exceptions.UnableToGetCurrentVersionException
+import pl.pszklarska.pubversionchecker.util.exceptions.UnableToGetLatestVersionException
+import pl.pszklarska.pubversionchecker.util.exceptions.UnableToGetPackageNameException
 import pl.pszklarska.pubversionchecker.util.getDependencies
 
 class YamlParser(
@@ -31,6 +34,13 @@ class YamlParser(
                     val latestVersion = versionsRepository.getLatestVersion(it.packageName)
                     DependencyDescription(it, latestVersion)
                 } catch (e: UnableToGetLatestVersionException) {
+                    Sentry.captureException(e)
+                    null
+                } catch (e: UnableToGetCurrentVersionException) {
+                    Sentry.captureException(e)
+                    null
+                } catch (e: UnableToGetPackageNameException) {
+                    Sentry.captureException(e)
                     null
                 }
             }

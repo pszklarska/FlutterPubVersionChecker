@@ -22,4 +22,9 @@
                 enabledByDefault="true"
                 implementationClass="pl.pszklarska.pubversionchecker.inspection.PubPackagesInspection"/>
     </extensions>
+
+    <!-- Crash reporting -->
+    <extensions defaultExtensionNs="com.intellij">
+        <errorHandler implementation="pl.pszklarska.pubversionchecker.reporting.SentryErrorReporter"/>
+    </extensions>
 </idea-plugin>
