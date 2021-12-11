@@ -3,6 +3,8 @@
 # Flutter Pub Version Checker Changelog
 
 ## [Unreleased]
+### Fixed
+- Dependency versions not being retrieved properly
 
 ## [1.3.1] - 2021-10-31
 ### Fixed
