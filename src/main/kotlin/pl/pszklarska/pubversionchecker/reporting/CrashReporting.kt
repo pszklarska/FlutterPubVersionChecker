@@ -11,7 +11,7 @@ class CrashReporting {
 
     fun init() {
         try {
-            val plugin = PluginManagerCore.getPlugin(PluginId.findId("pl.pszklarska.pubversionchecker"))
+            val plugin = PluginManagerCore.getPlugin(PluginId.getId("pl.pszklarska.pubversionchecker"))
             Sentry.init { options ->
                 options.dsn = sentryDsn
                 options.release = "pub-version-checker@${plugin?.version}"

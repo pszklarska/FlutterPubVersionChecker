@@ -1,8 +1,9 @@
 package pl.pszklarska.pubversionchecker.util
 
-import kotlinx.serialization.SerializationException
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.readValue
 import pl.pszklarska.pubversionchecker.dto.Response
 import pl.pszklarska.pubversionchecker.util.exceptions.UnableToGetLatestVersionException
 import java.io.IOException
@@ -14,6 +15,10 @@ class VersionsRepository {
     private val httpClient = DependencyHttpClient()
 
     private val dependencyList = mutableListOf<Dependency>()
+
+    private val mapper = ObjectMapper()
+        .registerModule(KotlinModule())
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
     fun getLatestVersion(packageName: String): String {
         printMessage("Checking latest version for: $packageName")
@@ -35,13 +40,11 @@ class VersionsRepository {
             return response.latest.version.trim()
         } catch (e: IOException) {
             throw UnableToGetLatestVersionException(packageName, e)
-        } catch (e: SerializationException) {
-            throw UnableToGetLatestVersionException(packageName, e)
         }
     }
 
     private fun parseResponse(responseString: String): Response {
-        return Json { ignoreUnknownKeys = true }.decodeFromString(responseString)
+        return mapper.readValue(responseString)
     }
 
 }
