@@ -1,9 +1,12 @@
 package pl.pszklarska.pubversionchecker.util
 
 import pl.pszklarska.pubversionchecker.dto.Dependency
+import pl.pszklarska.pubversionchecker.util.exceptions.UnableToGetCurrentVersionException
+import pl.pszklarska.pubversionchecker.util.exceptions.UnableToGetPackageNameException
 import java.util.regex.Pattern
 
-const val DEPENDENCIES_PATTERN = """^(?!#)\s*(?!(?:version|sdk|ref|url|flutter)\b)(\S+):\s*[<|=>^]*([0-9]+\.[0-9]+\.[0-9]+\+?\S*)"""
+const val DEPENDENCIES_PATTERN =
+    """^(?!#)\s*(?!(?:version|sdk|ref|url|flutter)\b)(\S+):\s*[<|=>^]*([0-9]+\.[0-9]+\.[0-9]+\+?\S*)"""
 
 
 /**
@@ -51,8 +54,7 @@ fun String.getPackageName(): String {
     try {
         return regex.find(this)?.groupValues?.get(1)!!
     } catch (e: Exception) {
-        print(e)
-        throw UnableToGetPackageNameException(this)
+        throw UnableToGetPackageNameException(this, e)
     }
 }
 
@@ -65,8 +67,7 @@ fun String.getVersionName(): String {
     try {
         return regex.find(this)?.groupValues?.get(2)!!
     } catch (e: Exception) {
-        print(e)
-        throw UnableToReadCurrentVersionException(this)
+        throw UnableToGetCurrentVersionException(this, e)
     }
 }
 
@@ -83,6 +84,3 @@ fun String.findVersionIndexInFile(packageName: String): Int {
 
     return this.substring(indexOfPackageName).indexOfFirst { it.isDigit() } + indexOfPackageName
 }
-
-class UnableToReadCurrentVersionException(dependency: String) :
-    Exception("Cannot read current version number for dependency: $dependency")

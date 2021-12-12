@@ -126,6 +126,14 @@ jobs:
           echo "::set-output name=name::$NAME"
           echo "::set-output name=changelog::$CHANGELOG"
 
+      # Set secrets
+      - name: Set secrets
+        shell: bash
+        run: |
+          SECRETS_FILE="${GITHUB_WORKSPACE}/src/main/kotlin/pl/pszklarska/pubversionchecker/util/Secrets.kt"
+          SENTRY_DSN=${{ secrets.SENTRY_DSN }}
+          sed -i 's|sentryDsn = \"\"|sentryDsn = \"'$SENTRY_DSN'\"|g' $SECRETS_FILE
+
       # Build artifact using buildPlugin Gradle task
       - name: Build Plugin
         run: ./gradlew buildPlugin

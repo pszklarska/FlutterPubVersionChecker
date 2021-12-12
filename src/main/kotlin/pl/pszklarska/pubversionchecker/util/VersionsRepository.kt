@@ -1,14 +1,16 @@
 package pl.pszklarska.pubversionchecker.util
 
-import com.google.gson.Gson
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import pl.pszklarska.pubversionchecker.dto.Response
+import pl.pszklarska.pubversionchecker.util.exceptions.UnableToGetLatestVersionException
 import java.io.IOException
 
 const val PUB_API_URL = "https://pub.dartlang.org/api/packages/"
 
 class VersionsRepository {
 
-    private val gson = Gson()
     private val httpClient = DependencyHttpClient()
 
     private val dependencyList = mutableListOf<Dependency>()
@@ -32,23 +34,17 @@ class VersionsRepository {
             val response = parseResponse(jsonResponse)
             return response.latest.version.trim()
         } catch (e: IOException) {
-            println(e)
-            throw UnableToGetLatestVersionException(packageName)
+            throw UnableToGetLatestVersionException(packageName, e)
+        } catch (e: SerializationException) {
+            throw UnableToGetLatestVersionException(packageName, e)
         }
     }
 
     private fun parseResponse(responseString: String): Response {
-        return gson.fromJson(responseString, Response::class.java)
+        return Json { ignoreUnknownKeys = true }.decodeFromString(responseString)
     }
 
 }
-
-class UnableToGetLatestVersionException(dependency: String) :
-    Exception("Cannot get the latest version number for package: $dependency")
-
-
-class UnableToGetPackageNameException(dependency: String) :
-    Exception("Cannot read package name for dependency: $dependency")
 
 private data class Dependency(
     val packageName: String,

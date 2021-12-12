@@ -10,6 +10,7 @@ import org.jetbrains.yaml.psi.YamlPsiElementVisitor
 import pl.pszklarska.pubversionchecker.parsing.YamlParser
 import pl.pszklarska.pubversionchecker.quickfix.UpdateAllDependenciesQuickFix
 import pl.pszklarska.pubversionchecker.quickfix.UpdateDependencyQuickFix
+import pl.pszklarska.pubversionchecker.reporting.CrashReporting
 import pl.pszklarska.pubversionchecker.util.VersionsRepository
 import pl.pszklarska.pubversionchecker.util.isPubspecFile
 
@@ -31,12 +32,14 @@ class YamlElementVisitor(
         if (!isOnTheFly) return
         if (!file.isPubspecFile()) return
 
+        val crashReporting = CrashReporting()
+        crashReporting.init()
+
+        val versionsRepository = VersionsRepository()
+        val yamlParser = YamlParser(file.text, versionsRepository)
+
         runBlocking {
-
-            val versionsRepository = VersionsRepository()
-            val yamlParser = YamlParser(file.text, versionsRepository)
             val notMatchingDependencies = yamlParser.inspectFile()
-
             notMatchingDependencies.forEach {
                 val psiElement = file.findElementAt(it.dependency.index)!!
 
