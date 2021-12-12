@@ -7,7 +7,6 @@ fun properties(key: String) = project.findProperty(key).toString()
 plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "1.5.30"
-    kotlin("plugin.serialization") version "1.5.30"
     id("org.jetbrains.intellij") version "1.1.6"
     id("org.jetbrains.changelog") version "1.3.0"
     id("org.jetbrains.qodana") version "0.1.12"
@@ -23,6 +22,8 @@ repositories {
 
 dependencies {
     implementation("io.sentry:sentry:5.4.3")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
 }
 

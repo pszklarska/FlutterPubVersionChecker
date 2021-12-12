@@ -10,6 +10,7 @@
 
 ### Fixed
 - Dependency versions not being retrieved properly
+- Pub.dev API responses serialization
 
 ## [1.3.1] - 2021-10-31
 ### Fixed
