@@ -3,6 +3,8 @@
 # Flutter Pub Version Checker Changelog
 
 ## [Unreleased]
+### Added
+- Support for the older IntelliJ IDEA versions 
 
 ## [1.3.2] - 2021-12-12
 ### Added
