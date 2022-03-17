@@ -4,6 +4,13 @@
 
 ## [Unreleased]
 
+## [1.3.4] - 2022-03-17 - jayjah
+
+- Dependencies update
+
+### Fixed
+- Blocking of IntelliJ IDEA while checking for dependencies in pubspec.yaml file
+
 ## [1.3.3] - 2021-12-13
 ### Added
 - Support for the older IntelliJ IDEA versions
