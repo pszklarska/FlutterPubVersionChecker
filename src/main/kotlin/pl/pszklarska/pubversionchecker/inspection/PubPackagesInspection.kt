@@ -38,7 +38,7 @@ class YamlElementVisitor(
         val versionsRepository = VersionsRepository()
         val yamlParser = YamlParser(file.text, versionsRepository)
 
-        runBlocking {
+        CoroutineScope(Main).launch {
             val notMatchingDependencies = yamlParser.inspectFile()
             notMatchingDependencies.forEach {
                 val psiElement = file.findElementAt(it.dependency.index)!!
