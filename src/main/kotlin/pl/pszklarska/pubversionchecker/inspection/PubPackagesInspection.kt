@@ -5,7 +5,7 @@ import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import org.jetbrains.yaml.psi.YamlPsiElementVisitor
 import pl.pszklarska.pubversionchecker.parsing.YamlParser
 import pl.pszklarska.pubversionchecker.quickfix.UpdateAllDependenciesQuickFix
@@ -38,7 +38,7 @@ class YamlElementVisitor(
         val versionsRepository = VersionsRepository()
         val yamlParser = YamlParser(file.text, versionsRepository)
 
-        CoroutineScope(Main).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             val notMatchingDependencies = yamlParser.inspectFile()
             notMatchingDependencies.forEach {
                 val psiElement = file.findElementAt(it.dependency.index)!!
