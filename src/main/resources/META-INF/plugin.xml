@@ -3,7 +3,8 @@
     <id>pl.pszklarska.pubversionchecker</id>
     <name>Flutter Pub Version Checker</name>
     <vendor email="pszklarska@gmail.com"
-            url="http://www.github.com/pszklarska/FlutterPubVersionChecker">Paulina Szklarska
+            url="http://www.github.com/pszklarska/FlutterPubVersionChecker">
+        Paulina Szklarska
     </vendor>
 
     <depends>org.jetbrains.kotlin</depends>
@@ -13,18 +14,15 @@
 
     <!-- Code Inspection Component  -->
     <extensions defaultExtensionNs="com.intellij">
-        <localInspection
+
+        <externalAnnotator
                 language="yaml"
-                displayName="Pub Packages latest versions"
-                groupBundle="messages.InspectionsBundle"
-                groupKey="group.names.dependency.issues"
-                level="WARNING"
-                enabledByDefault="true"
-                implementationClass="pl.pszklarska.pubversionchecker.inspection.PubPackagesInspection"/>
+                implementationClass="pl.pszklarska.pubversionchecker.annotator.PubPackagesAnnotator"/>
     </extensions>
 
     <!-- Crash reporting -->
     <extensions defaultExtensionNs="com.intellij">
-        <errorHandler implementation="pl.pszklarska.pubversionchecker.reporting.SentryErrorReporter"/>
+        <errorHandler
+                implementation="pl.pszklarska.pubversionchecker.reporting.SentryErrorReporter"/>
     </extensions>
 </idea-plugin>

@@ -23,7 +23,6 @@ repositories {
 dependencies {
     implementation("io.sentry:sentry:5.7.3")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
 }
 
