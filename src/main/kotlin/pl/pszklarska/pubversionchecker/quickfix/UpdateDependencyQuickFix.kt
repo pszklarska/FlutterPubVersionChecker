@@ -1,34 +1,37 @@
 package pl.pszklarska.pubversionchecker.quickfix
 
-import com.intellij.codeInspection.LocalQuickFixOnPsiElement
+import com.intellij.codeInsight.intention.impl.BaseIntentionAction
 import com.intellij.lang.Language
+import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
 import com.intellij.psi.JavaPsiFacade
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.tree.IElementType
+import com.intellij.util.IncorrectOperationException
 
 
-const val DEBUG_NAME = "text"
-const val YAML = "yaml"
+internal class UpdateDependencyQuickFix(
+    private val packageName: String, private val latestVersion: String, private val element: PsiElement
+) : BaseIntentionAction() {
 
-class UpdateDependencyQuickFix(
-    psiElement: PsiElement,
-    private val latestVersion: String,
-    private val packageName: String
-) :
-    LocalQuickFixOnPsiElement(psiElement) {
+    override fun getText(): String {
+        return "Update $packageName"
+    }
 
-    private val description = "Update $packageName"
+    override fun getFamilyName(): String {
+        return "Update package"
+    }
 
-    override fun getFamilyName(): String = description
+    override fun isAvailable(project: Project, editor: Editor, file: PsiFile): Boolean {
+        return true
+    }
 
-    override fun getText(): String = description
-
-    override fun invoke(project: Project, file: PsiFile, startElement: PsiElement, endElement: PsiElement) {
+    @Throws(IncorrectOperationException::class)
+    override fun invoke(project: Project, editor: Editor, file: PsiFile) {
         val factory = JavaPsiFacade.getElementFactory(project)
-        val iElementType = IElementType(DEBUG_NAME, Language.findLanguageByID(YAML))
+        val iElementType = IElementType("text", Language.findLanguageByID("yaml"))
         val psiExpression = factory.createDummyHolder("^$latestVersion", iElementType, null)
-        startElement.replace(psiExpression)
+        element.replace(psiExpression)
     }
 }

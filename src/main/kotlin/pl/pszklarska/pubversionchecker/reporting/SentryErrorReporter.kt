@@ -41,6 +41,8 @@ class SentryErrorReporter : ErrorReportSubmitter() {
         val project = CommonDataKeys.PROJECT.getData(context)
         object : Backgroundable(project, "Sending error report") {
             override fun run(indicator: ProgressIndicator) {
+                CrashReporting().init()
+
                 val event = SentryEvent()
                 event.level = SentryLevel.ERROR
 
