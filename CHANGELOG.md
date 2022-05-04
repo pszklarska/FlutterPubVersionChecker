@@ -3,6 +3,8 @@
 # Flutter Pub Version Checker Changelog
 
 ## [Unreleased]
+
+## [1.3.4] - 2022-05-04
 ### Fixed
 - UI is frozen when editing pubspec.yaml
 
