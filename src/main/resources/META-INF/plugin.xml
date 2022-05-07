@@ -31,7 +31,7 @@
                 parentId="tools"
                 instance="pl.pszklarska.pubversionchecker.settings.AppSettingsConfigurable"
                 id="pl.pszklarska.pubversionchecker.settings.AppSettingsConfigurable"
-                displayName="Flutter Pub Version Checker Settings"/>
+                displayName="Flutter Pub Version Checker"/>
     </extensions>
 
     <!-- Crash reporting -->

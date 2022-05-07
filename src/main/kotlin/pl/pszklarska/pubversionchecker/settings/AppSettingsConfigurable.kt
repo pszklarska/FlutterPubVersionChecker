@@ -2,6 +2,7 @@ package pl.pszklarska.pubversionchecker.settings
 
 import com.intellij.openapi.options.Configurable
 import org.jetbrains.annotations.Nls
+import pl.pszklarska.pubversionchecker.resources.Strings
 import javax.swing.JComponent
 
 class AppSettingsConfigurable : Configurable {
@@ -9,7 +10,7 @@ class AppSettingsConfigurable : Configurable {
 
     @Nls(capitalization = Nls.Capitalization.Title)
     override fun getDisplayName(): String {
-        return "Flutter Pub Version Checker Settings"
+        return Strings.settingsTitle
     }
 
     override fun getPreferredFocusedComponent(): JComponent {

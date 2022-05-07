@@ -9,6 +9,7 @@ import pl.pszklarska.pubversionchecker.dto.DependencyDescription
 import pl.pszklarska.pubversionchecker.parsing.YamlParser
 import pl.pszklarska.pubversionchecker.quickfix.UpdateAllDependenciesQuickFix
 import pl.pszklarska.pubversionchecker.quickfix.UpdateDependencyQuickFix
+import pl.pszklarska.pubversionchecker.resources.Strings
 import pl.pszklarska.pubversionchecker.settings.AppSettingsState
 import pl.pszklarska.pubversionchecker.util.DependencyHttpClient
 import pl.pszklarska.pubversionchecker.util.VersionsRepository
@@ -24,7 +25,6 @@ class PubPackagesAnnotator : ExternalAnnotator<PubPackagesAnnotator.Info, PubPac
     override fun doAnnotate(collectedInfo: Info?): Result? {
         if (collectedInfo == null) return null
 
-
         val httpClient = DependencyHttpClient()
         val appSettingsState = AppSettingsState.instance
         val versionsRepository = VersionsRepository(httpClient, appSettingsState)
@@ -38,7 +38,7 @@ class PubPackagesAnnotator : ExternalAnnotator<PubPackagesAnnotator.Info, PubPac
 
         annotationResult.annotations.forEach {
             val psiElement = file.findElementAt(it.dependency.index)!!
-            holder.newAnnotation(HighlightSeverity.WARNING, "Latest available version is: ${it.latestVersion}")
+            holder.newAnnotation(HighlightSeverity.WARNING, "${Strings.annotationDescription} ${it.latestVersion}")
                 .range(psiElement)
                 .newFix(UpdateDependencyQuickFix(it.dependency.packageName, it.latestVersion, psiElement))
                 .registerFix()
