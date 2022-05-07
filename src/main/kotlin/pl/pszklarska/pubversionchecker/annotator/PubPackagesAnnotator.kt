@@ -7,6 +7,7 @@ import com.intellij.openapi.application.runReadAction
 import com.intellij.psi.PsiFile
 import pl.pszklarska.pubversionchecker.dto.DependencyDescription
 import pl.pszklarska.pubversionchecker.parsing.YamlParser
+import pl.pszklarska.pubversionchecker.quickfix.GoToPubDevQuickFix
 import pl.pszklarska.pubversionchecker.quickfix.UpdateAllDependenciesQuickFix
 import pl.pszklarska.pubversionchecker.quickfix.UpdateDependencyQuickFix
 import pl.pszklarska.pubversionchecker.resources.Strings
@@ -43,6 +44,8 @@ class PubPackagesAnnotator : ExternalAnnotator<PubPackagesAnnotator.Info, PubPac
                 .newFix(UpdateDependencyQuickFix(it.dependency.packageName, it.latestVersion, psiElement))
                 .registerFix()
                 .newFix(UpdateAllDependenciesQuickFix(annotationResult.annotations))
+                .registerFix()
+                .newFix(GoToPubDevQuickFix(it.dependency.packageName))
                 .registerFix()
                 .create()
         }

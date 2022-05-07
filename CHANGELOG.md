@@ -4,7 +4,8 @@
 
 ## [Unreleased]
 ### Added
-- Support for preview and prerelease plugins ([#38](https://github.com/pszklarska/FlutterPubVersionChecker/issues/38))
+- Support for preview and prerelease packages ([#38](https://github.com/pszklarska/FlutterPubVersionChecker/issues/38))
+- Go to pub.dev from the quick-fix menu ([#54](https://github.com/pszklarska/FlutterPubVersionChecker/issues/54))
 ### Fixed
 - Errors not being reported to crash tracker
 
