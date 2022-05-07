@@ -6,6 +6,6 @@ package pl.pszklarska.pubversionchecker.util
 
 class Secrets {
     companion object {
-        const val sentryDsn = "https://24aac9c6a4234340ad74ce702884b69a@o1088436.ingest.sentry.io/6103170"
+        const val sentryDsn = ""
     }
 }
