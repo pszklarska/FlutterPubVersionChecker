@@ -20,6 +20,20 @@
                 implementationClass="pl.pszklarska.pubversionchecker.annotator.PubPackagesAnnotator"/>
     </extensions>
 
+    <!-- Settings -->
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService
+                serviceImplementation="pl.pszklarska.pubversionchecker.settings.AppSettingsState"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationConfigurable
+                parentId="tools"
+                instance="pl.pszklarska.pubversionchecker.settings.AppSettingsConfigurable"
+                id="pl.pszklarska.pubversionchecker.settings.AppSettingsConfigurable"
+                displayName="Flutter Pub Version Checker Settings"/>
+    </extensions>
+
     <!-- Crash reporting -->
     <extensions defaultExtensionNs="com.intellij">
         <errorHandler
