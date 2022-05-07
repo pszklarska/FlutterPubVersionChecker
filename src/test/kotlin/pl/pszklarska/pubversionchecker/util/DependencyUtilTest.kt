@@ -94,4 +94,16 @@ class DependencyUtilTest {
         assertEquals(27, testFile.findVersionIndexInFile("test_package"))
         assertEquals(55, testFile.findVersionIndexInFile("other_test_package"))
     }
+
+    @Test
+    fun getPackageNameIfContainsNameAndThreeNumbers() {
+        assertEquals("test", "test: ^1.0.0".getPackageName())
+    }
+
+    @Test
+    fun getPackageNameIfContainsSuffix() {
+        assertEquals("test", "test: 1.0.0+4".getPackageName())
+        assertEquals("test", "test: 1.0.0+hotfix.oopsie".getPackageName())
+        assertEquals("test", "test: 1.0.0-alpha.12".getPackageName())
+    }
 }

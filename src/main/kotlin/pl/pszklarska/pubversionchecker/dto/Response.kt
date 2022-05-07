@@ -1,9 +1,13 @@
 package pl.pszklarska.pubversionchecker.dto
 
+import java.util.*
+
 data class Response(
-    val latest: Latest
+    val latest: DependencyResponse,
+    val versions: List<DependencyResponse>
 )
 
-data class Latest(
-    val version: String
+data class DependencyResponse(
+    val version: String,
+    val published: Date
 )

@@ -1,4 +1,4 @@
-package pl.pszklarska.pubversionchecker.util
+package pl.pszklarska.pubversionchecker.parsing
 
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
@@ -7,7 +7,7 @@ import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import pl.pszklarska.pubversionchecker.dto.Dependency
 import pl.pszklarska.pubversionchecker.dto.DependencyDescription
-import pl.pszklarska.pubversionchecker.parsing.YamlParser
+import pl.pszklarska.pubversionchecker.util.VersionsRepository
 import kotlin.test.assertEquals
 
 class YamlParserTest {

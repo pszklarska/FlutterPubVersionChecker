@@ -9,6 +9,8 @@ import pl.pszklarska.pubversionchecker.dto.DependencyDescription
 import pl.pszklarska.pubversionchecker.parsing.YamlParser
 import pl.pszklarska.pubversionchecker.quickfix.UpdateAllDependenciesQuickFix
 import pl.pszklarska.pubversionchecker.quickfix.UpdateDependencyQuickFix
+import pl.pszklarska.pubversionchecker.settings.AppSettingsState
+import pl.pszklarska.pubversionchecker.util.DependencyHttpClient
 import pl.pszklarska.pubversionchecker.util.VersionsRepository
 
 class PubPackagesAnnotator : ExternalAnnotator<PubPackagesAnnotator.Info, PubPackagesAnnotator.Result>() {
@@ -22,7 +24,10 @@ class PubPackagesAnnotator : ExternalAnnotator<PubPackagesAnnotator.Info, PubPac
     override fun doAnnotate(collectedInfo: Info?): Result? {
         if (collectedInfo == null) return null
 
-        val versionsRepository = VersionsRepository()
+
+        val httpClient = DependencyHttpClient()
+        val appSettingsState = AppSettingsState.instance
+        val versionsRepository = VersionsRepository(httpClient, appSettingsState)
         val yamlParser = YamlParser(collectedInfo.file.text, versionsRepository)
         val annotations = yamlParser.inspectFile()
         return if (annotations.isNotEmpty()) Result(annotations) else null
