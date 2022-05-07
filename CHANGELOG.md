@@ -3,6 +3,8 @@
 # Flutter Pub Version Checker Changelog
 
 ## [Unreleased]
+### Added
+- Support for preview and prerelease plugins ([#38](https://github.com/pszklarska/FlutterPubVersionChecker/issues/38))
 
 ## [1.3.4] - 2022-05-04
 ### Fixed
