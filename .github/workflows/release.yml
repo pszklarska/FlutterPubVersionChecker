@@ -35,6 +35,14 @@ jobs:
           ${{ github.event.release.body }}
           EOM`"
 
+      # Set secrets
+      - name: Set secrets
+        shell: bash
+        run: |
+          SECRETS_FILE="${GITHUB_WORKSPACE}/src/main/kotlin/pl/pszklarska/pubversionchecker/util/Secrets.kt"
+          SENTRY_DSN=${{ secrets.SENTRY_DSN }}
+          sed -i 's|sentryDsn = \"\"|sentryDsn = \"'$SENTRY_DSN'\"|g' $SECRETS_FILE
+
       # Publish the plugin to the Marketplace
       - name: Publish Plugin
         env:

@@ -3,6 +3,8 @@
 # Flutter Pub Version Checker Changelog
 
 ## [Unreleased]
+### Fixed
+- Errors not being reported to crash tracker
 
 ## [1.3.4] - 2022-05-04
 ### Fixed
