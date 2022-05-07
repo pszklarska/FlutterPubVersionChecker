@@ -15,20 +15,19 @@ import com.intellij.util.Consumer
 import io.sentry.Sentry
 import io.sentry.SentryEvent
 import io.sentry.SentryLevel
+import pl.pszklarska.pubversionchecker.resources.Strings
 import java.awt.Component
 
 
 class SentryErrorReporter : ErrorReportSubmitter() {
 
     override fun getPrivacyNoticeText(): String {
-        return "To help me fix this problem, you can send an anonymous crash report. This report will contain " +
-                "information on the crash, including your device model, system version, the plugin’s version and " +
-                "build number. By sending this report you hereby agree to this policy."
+        return Strings.errorReportDescription
     }
 
 
     override fun getReportActionText(): String {
-        return "Report to Author"
+        return Strings.errorReportButtonText
     }
 
     override fun submit(
@@ -39,7 +38,7 @@ class SentryErrorReporter : ErrorReportSubmitter() {
     ): Boolean {
         val context = DataManager.getInstance().getDataContext(parentComponent)
         val project = CommonDataKeys.PROJECT.getData(context)
-        object : Backgroundable(project, "Sending error report") {
+        object : Backgroundable(project, Strings.errorReportLoaderText) {
             override fun run(indicator: ProgressIndicator) {
                 CrashReporting().init()
 
@@ -58,8 +57,8 @@ class SentryErrorReporter : ErrorReportSubmitter() {
                 ApplicationManager.getApplication().invokeLater {
                     Messages.showInfoMessage(
                         parentComponent,
-                        "Thank you for submitting your report!",
-                        "Error Report"
+                        Strings.errorReportThankYouDialogText,
+                        Strings.errorReportThankYouDialogTitle
                     )
                     consumer.consume(SubmittedReportInfo(SubmittedReportInfo.SubmissionStatus.NEW_ISSUE))
                 }

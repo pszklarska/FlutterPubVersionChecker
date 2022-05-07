@@ -9,6 +9,7 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.tree.IElementType
 import com.intellij.util.IncorrectOperationException
 import pl.pszklarska.pubversionchecker.dto.DependencyDescription
+import pl.pszklarska.pubversionchecker.resources.Strings
 import pl.pszklarska.pubversionchecker.util.findVersionIndexInFile
 
 
@@ -16,14 +17,12 @@ class UpdateAllDependenciesQuickFix(
     private val dependencies: List<DependencyDescription>,
 ) : BaseIntentionAction() {
 
-    private val description = "Update\u200B all" // zero-length whitespace to place "Update all" below other fixes
-
     override fun getText(): String {
-        return description
+        return Strings.updateAllFixDescription
     }
 
     override fun getFamilyName(): String {
-        return "Update package"
+        return Strings.fixFamilyName
     }
 
     override fun isAvailable(project: Project, editor: Editor, file: PsiFile): Boolean {

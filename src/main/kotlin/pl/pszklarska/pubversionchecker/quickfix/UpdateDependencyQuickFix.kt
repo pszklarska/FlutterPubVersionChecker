@@ -9,6 +9,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.tree.IElementType
 import com.intellij.util.IncorrectOperationException
+import pl.pszklarska.pubversionchecker.resources.Strings
 
 
 internal class UpdateDependencyQuickFix(
@@ -16,11 +17,11 @@ internal class UpdateDependencyQuickFix(
 ) : BaseIntentionAction() {
 
     override fun getText(): String {
-        return "Update $packageName"
+        return "${Strings.updateDescription} $packageName"
     }
 
     override fun getFamilyName(): String {
-        return "Update package"
+        return Strings.fixFamilyName
     }
 
     override fun isAvailable(project: Project, editor: Editor, file: PsiFile): Boolean {
