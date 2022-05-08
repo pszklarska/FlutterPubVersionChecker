@@ -3,9 +3,12 @@
 # Flutter Pub Version Checker Changelog
 
 ## [Unreleased]
+
+## [1.3.5] - 2022-05-07
 ### Added
 - Support for preview and prerelease packages ([#38](https://github.com/pszklarska/FlutterPubVersionChecker/issues/38))
 - Go to pub.dev from the quick-fix menu ([#54](https://github.com/pszklarska/FlutterPubVersionChecker/issues/54))
+
 ### Fixed
 - Errors not being reported to crash tracker
 
